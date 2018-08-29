@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 $( document ).ready(function() {
 //api key
