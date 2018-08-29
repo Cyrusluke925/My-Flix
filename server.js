@@ -18,11 +18,11 @@ app.use(function(req, res, next) {
 
 
 
-//const db = require('./models');
 
 
 
-//app.use(express.static('public'));
+
+app.use(express.static('public'));
 
 
 
