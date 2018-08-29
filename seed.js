@@ -25,18 +25,18 @@ var flix_list = [
         if(err) { return console.log(err) }
         console.log("all gone: ", everythingRemoved);
         // when we know we have no more objects, then create new objects
-          createChar();
+        createFlix();
     });
 
     let createFlix = function(){
         db.Flix.create(flix_list, (err, allFlix) => {
         if(err) { return console.log(err) }
-        retrieveChar();    
+        retrieveFlix();    
     })
     }
     
     let retrieveFlix = function( ){
-        db.Flix.find( {} ,(err, allCharacters) => {
+        db.Flix.find( {} ,(err, allFlix) => {
             if(err) { return console.log(err) }
             console.log("TOTAL flix: ", allFlix.length)
             console.log("all flix: ", allFlix);
