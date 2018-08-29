@@ -3,6 +3,8 @@
 const express = require('express');
 const app = express();
 
+const db = require('./models')
+
 
 
 const bodyParser = require('body-parser');
@@ -30,6 +32,16 @@ app.get('/', function homepage(req, res) {
     res.sendFile(_dirname + '/views/index.html');
 });
 
+
+app.get('/api/flix', (req, res) => {
+    db.Flix.find({}, (err, allFlix) => {
+        if (err) {
+            return console.log(err)
+        }
+
+        res.json(allFlix);
+    })
+})
 
 
 
