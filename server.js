@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const app = express();
 
@@ -16,27 +18,18 @@ app.use(function(req, res, next) {
 
 
 
-//const db = require('./models');
+  const db = require('./models');
 
 
 
-//app.use(express.static('public'));
+app.use(express.static('public'));
 
 
 
 app.get('/', function homepage(req, res) {
-    res.sendFile('/views/index.html', {root: __dirname});
+    res.sendFile(_dirname + '/views/index.html');
 });
 
 
 
 
-
-
-
-
-
-
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Express server is up and running on http://localhost:3000/');
-  });
