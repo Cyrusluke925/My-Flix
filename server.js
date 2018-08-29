@@ -25,12 +25,18 @@ app.use(function(req, res, next) {
 
 
 app.get('/', function homepage(req, res) {
-    res.sendFile('views/index.html' , { root : __dirname});
+    res.sendFile('/views/index.html', {root: __dirname});
 });
 
 
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log('Book app listening at http://localhost:3000/');
+
+
+
+
+
+
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log('Express server is up and running on http://localhost:3000/');
   });
-  
