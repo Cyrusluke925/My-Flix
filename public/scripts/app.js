@@ -1,4 +1,5 @@
 
+$( document ).ready(function() {
 //api key
 const apiKey = config.API_KEY;
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key='+apiKey+"&query=Jack+Reacher";
@@ -21,3 +22,7 @@ $.ajax({
     console.log(e2)
     console.dir(e3)  
   }
+
+
+  console.log( "ready!" );
+});
