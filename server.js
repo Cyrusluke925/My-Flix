@@ -24,6 +24,14 @@ const db = require('./models');
 app.use(express.static('public'));
 
 
+//User Routes 
+app.get('/', function logInPage(req, res) {
+    res.sendFile('views/loginPage.html', {root: __dirname});
+})
+
+
+
+
 
 app.get('/', function homepage(req, res) {
     res.sendFile('views/index.html' , { root : __dirname});
