@@ -1,7 +1,7 @@
 
 const express = require('express');
 const app = express();
-
+require('dotenv').config()
 
 
 const bodyParser = require('body-parser');
@@ -27,6 +27,10 @@ app.use(express.static('public'));
 
 app.get('/', function homepage(req, res) {
     res.sendFile('views/index.html' , { root : __dirname});
+});
+
+app.get('/search', function homepage(req, res) {
+    res.sendFile('views/searchPage.html' , { root : __dirname});
 });
 
 
