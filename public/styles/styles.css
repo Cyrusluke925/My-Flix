@@ -1,3 +1,8 @@
+
+
+
+
+
 header h1 {
     text-align: center;
     font-family: 'Nanum Gothic';
@@ -14,6 +19,7 @@ main {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    
 
 }
 
@@ -27,6 +33,7 @@ main {
     width: 100vw;
     background-image: url('/pictures/landingPageRight.jpg');
     background-size: cover;
+    filter: brightness(90%)
 }
 
 
@@ -46,19 +53,8 @@ a {
     font-family: 'Nanum Gothic';
     font-size: 2.5em;
     color: white;
-}
-
-.logIn:hover ~ .signUp{
-    filter: brightness(20%);
-   
-}
-
-.logIn:hover {
-    filter: brightness(120%);
+    
 }
 
 
-.signUp:hover ~ .logIn{
-    display: none;
-}
 
