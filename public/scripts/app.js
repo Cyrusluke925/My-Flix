@@ -4,7 +4,11 @@ const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
 
 
-let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 16,"name": "Animation"},{"id": 35,"name": "Comedy"},{"id": 80,"name": "Crime"},{"id": 99,"name": "Documentary"},{"id": 18,"name": "Drama"},{"id": 10751,"name": "Family"},{"id": 14,"name": "Fantasy"},{"id": 36,"name": "History"},{"id": 27,"name": "Horror"},{"id": 10402,"name": "Music"},{"id": 9648,"name": "Mystery"},{"id": 10749,"name": "Romance"},{"id": 878,"name": "Science Fiction"},{"id": 10770,"name": "TV Movie"},{"id": 53,"name": "Thriller"},{"id": 10752,"name": "War"},{"id": 37,"name": "Western"}]
+let genresMovies =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 16,"name": "Animation"},{"id": 35,"name": "Comedy"},{"id": 80,"name": "Crime"},{"id": 99,"name": "Documentary"},{"id": 18,"name": "Drama"},{"id": 10751,"name": "Family"},{"id": 14,"name": "Fantasy"},{"id": 36,"name": "History"},{"id": 27,"name": "Horror"},{"id": 10402,"name": "Music"},{"id": 9648,"name": "Mystery"},{"id": 10749,"name": "Romance"},{"id": 878,"name": "Science Fiction"},{"id": 10770,"name": "TV Movie"},{"id": 53,"name": "Thriller"},{"id": 10752,"name": "War"},{"id": 37,"name": "Western"}]
+
+
+let genresShows = [{"id": 10759,"name": "Action & Adventure"},{"id": 16,"name": "Animation"},{"id": 35,"name": "Comedy"},{"id": 80,"name": "Crime"},{"id": 99,"name": "Documentary"},{"id": 18,"name": "Drama"},{"id": 10751,"name": "Family"},{"id": 10762,"name": "Kids"},{"id": 9648,"name": "Mystery"},{"id": 10763,"name": "News"},{"id": 10764,"name": "Reality"},{"id": 10765,"name": "Sci-Fi & Fantasy"},{"id": 10766,"name": "Soap"},{"id": 10767,"name": "Talk"},{"id": 10768,"name": "War & Politics"},{"id": 37,"name": "Western"}];
+
 
 
 const end = "&query=Jack+Reacher";
@@ -12,6 +16,9 @@ const end = "&query=Jack+Reacher";
 
     $('form').on('submit', e=>{
         e.preventDefault();
+
+
+
         console.log("Submit Clicked!");
         let formArr = $('form').serializeArray();
         console.log($('form').serializeArray());
@@ -49,55 +56,64 @@ const end = "&query=Jack+Reacher";
 
 
                     for(let responseIterator = 0; responseIterator < response.results.length; responseIterator++){
-                        let currentGenres = findGenres(response.results[responseIterator].genre_ids);
+                        let currentGenres;
 
-                        let movieTitle = response.results[responseIterator].title;
-                        let showName = response.results[responseIterator].name;
+                        if(response.results[responseIterator].media_type === "tv"){
+                            currentGenres= findGenresShows(response.results[responseIterator].genre_ids)
+                        }else{
+                            currentGenres= findGenresMovies(response.results[responseIterator].genre_ids)
+                        }
+
+
+
+                        let mediaType = response.results[responseIterator].media_type;
 
 
 
 
                         if(response.results[responseIterator].poster_path === null || response.results[responseIterator].poster_path === undefined ){
-                            if(movieTitle == undefined){
+                            if(mediaType === "movie"){
                             $('form').append(`
                                 <div>
                                 <p>NO IMAGE</p>
-                                <p>${showName}</p>
+                                <p>${response.results[responseIterator].title}</p>
                                 <p>${response.results[responseIterator].overview}</p>
                                 <p>Genre: ${currentGenres}</p>
                                 <button>Like</button>
                                 </div>
                             `);
-                            }else if(movieTitle !== undefined){
+                            }else if(mediaType === "tv"){
                             
                                 $('form').append(`
                                     <div>
                                     <p>NO IMAGE</p>
-                                    <p>${movieTitle}</p>
+                                    <p>${response.results[responseIterator].name}</p>
                                     <p>${response.results[responseIterator].overview}</p>
                                     <p>Genre: ${currentGenres}</p>
                                     <button>Like</button>
                                     </div>
                                 `);
 
+                            }else{
+                                console.log("PROBLEM INVALID TYPE -RAJ")
                             }
                         }else{
-                            if(movieTitle == undefined){
+                            if(mediaType === "movie"){
                                 $('form').append(`
                                     <div>
                                     <p>NO IMAGE</p>
-                                    <p>${showName}</p>
+                                    <p>${response.results[responseIterator].title}</p>
                                     <p>${response.results[responseIterator].overview}</p>
                                     <p>Genre: ${currentGenres}</p>
                                     <button>Like</button>
                                     </div>
                                 `);
-                                }else if(movieTitle !== undefined){
+                                }else if(mediaType === "tv"){
                                 
                                     $('form').append(`
                                         <div>
                                         <p>NO IMAGE</p>
-                                        <p>${movieTitle}</p>
+                                        <p>${response.results[responseIterator].name}</p>
                                         <p>${response.results[responseIterator].overview}</p>
                                         <p>Genre: ${currentGenres}</p>
                                         <button>Like</button>
@@ -192,21 +208,45 @@ const end = "&query=Jack+Reacher";
 
 
 
-    function findGenres(input){
+    function findGenresMovies(input){
         if(input === undefined){
-            return "NO VALUE";
+            return "UNDEFINED VALUE";
+        }else if(input.length === 0){
+            return "No genres listed"
         }
         let genresArr = [];
         for(let v = 0; v < input.length; v++){
-            for(let m = 0; m < genres.length; m++){
-                if(input[v] === genres[m].id){
-                    genresArr.push(genres[m].name);
+            for(let m = 0; m < genresMovies.length; m++){
+                if(input[v] === genresMovies[m].id){
+                    genresArr.push(genresMovies[m].name);
                 }
             }
 
         }
         return genresArr;
     }
+
+    function findGenresShows(input){
+        if(input === undefined){
+            return "UNDEFINED VALUE";
+        }else if(input.length === 0){
+            return "No genres listed"
+        }
+
+        let genresArr = [];
+        for(let v = 0; v < input.length; v++){
+            for(let m = 0; m < genresShows.length; m++){
+                if(input[v] === genresShows[m].id){
+                    genresArr.push(genresShows[m].name);
+                }
+            }
+
+        }
+        return genresArr;
+    }
+
+
+
 
 
 
