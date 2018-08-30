@@ -3,6 +3,7 @@ $( document ).ready(function() {
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
 
+
 let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 16,"name": "Animation"},{"id": 35,"name": "Comedy"},{"id": 80,"name": "Crime"},{"id": 99,"name": "Documentary"},{"id": 18,"name": "Drama"},{"id": 10751,"name": "Family"},{"id": 14,"name": "Fantasy"},{"id": 36,"name": "History"},{"id": 27,"name": "Horror"},{"id": 10402,"name": "Music"},{"id": 9648,"name": "Mystery"},{"id": 10749,"name": "Romance"},{"id": 878,"name": "Science Fiction"},{"id": 10770,"name": "TV Movie"},{"id": 53,"name": "Thriller"},{"id": 10752,"name": "War"},{"id": 37,"name": "Western"}]
 
 
@@ -49,25 +50,61 @@ const end = "&query=Jack+Reacher";
 
                     for(let responseIterator = 0; responseIterator < response.results.length; responseIterator++){
                         let currentGenres = findGenres(response.results[responseIterator].genre_ids);
-                        if(response.results[responseIterator].poster_path === null){
+
+                        let movieTitle = response.results[responseIterator].title;
+                        let showName = response.results[responseIterator].name;
+
+
+
+
+                        if(response.results[responseIterator].poster_path === null || response.results[responseIterator].poster_path === undefined ){
+                            if(movieTitle == undefined){
                             $('form').append(`
                                 <div>
                                 <p>NO IMAGE</p>
-                                <p>${response.results[responseIterator].original_title}</p>
+                                <p>${showName}</p>
                                 <p>${response.results[responseIterator].overview}</p>
-                                <button>Like</button>
-                                </div>
-                            `);
-                        }else{
-                            $('form').append(`
-                                <div>
-                                <img src = "https://image.tmdb.org/t/p/w200/${response.results[responseIterator].poster_path}">
-                                <p>Title: ${response.results[responseIterator].original_title}</p>
-                                <p>Description: ${response.results[responseIterator].overview}</p>
                                 <p>Genre: ${currentGenres}</p>
                                 <button>Like</button>
                                 </div>
                             `);
+                            }else if(movieTitle !== undefined){
+                            
+                                $('form').append(`
+                                    <div>
+                                    <p>NO IMAGE</p>
+                                    <p>${movieTitle}</p>
+                                    <p>${response.results[responseIterator].overview}</p>
+                                    <p>Genre: ${currentGenres}</p>
+                                    <button>Like</button>
+                                    </div>
+                                `);
+
+                            }
+                        }else{
+                            if(movieTitle == undefined){
+                                $('form').append(`
+                                    <div>
+                                    <p>NO IMAGE</p>
+                                    <p>${showName}</p>
+                                    <p>${response.results[responseIterator].overview}</p>
+                                    <p>Genre: ${currentGenres}</p>
+                                    <button>Like</button>
+                                    </div>
+                                `);
+                                }else if(movieTitle !== undefined){
+                                
+                                    $('form').append(`
+                                        <div>
+                                        <p>NO IMAGE</p>
+                                        <p>${movieTitle}</p>
+                                        <p>${response.results[responseIterator].overview}</p>
+                                        <p>Genre: ${currentGenres}</p>
+                                        <button>Like</button>
+                                        </div>
+                                    `);
+    
+                                }
                     }
                 }
                     console.log(response);
@@ -156,6 +193,9 @@ const end = "&query=Jack+Reacher";
 
 
     function findGenres(input){
+        if(input === undefined){
+            return "NO VALUE";
+        }
         let genresArr = [];
         for(let v = 0; v < input.length; v++){
             for(let m = 0; m < genres.length; m++){
