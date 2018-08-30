@@ -29,7 +29,10 @@ app.get('/login', function logInPage(req, res) {
     res.sendFile('views/loginPage.html', {root: __dirname});
 })
 
-
+app.get('/signup', function signUpPage(req, res) {
+    res.sendFile('views/signUpPage.html', {root: __dirname});
+    
+})
 
 
 

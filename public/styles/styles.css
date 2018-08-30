@@ -1,7 +1,17 @@
 
+@keyframes blur{
+    from {
+        filter: blur(30px);
+    }
+    to {
+        filter:blur(0);
+    }
+}
 
-
-
+h1 {
+    animation-name: blur;
+    animation-duration: 1s;
+}
 
 header h1 {
     text-align: center;
