@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('../pictures/movieCollage.jpg');
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('../pictures/movieCollage.jpg');
     background-position: center;
     background-size: cover;
 }
@@ -48,14 +48,22 @@ input[type="text"] {
     max-width: 80%;
     height: 2em;
     width: 100%;
+    
 }
+
+
 
 input[type="password"] {
     font-size:20px;
     max-width: 80%;
     height: 2em;
     width: 100%;
+    
 }
+
+
+
+
 
 h2 {
     font-family: "Nanum Gothic";
@@ -85,6 +93,22 @@ article {
     box-shadow: inset 0px 0px 0px 0px green, 0px 0px 20px 10px green;
  color: #217d3b;
 }
+
+
+
+#signUpBtn {
+    border-radius: 0.3em;
+    box-shadow: inset 0px 0px 30px 45px #217d3b , 0px 0px 0px 0px darkgreen;
+    color: #FFFFE7;
+  transition: box-shadow 0.5s, color 0.1s 0.25s;
+  
+}
+
+#signUpBtn:hover {
+    box-shadow: inset 0px 0px 0px 0px green, 0px 0px 20px 10px green;
+ color: #217d3b;
+}
+
 
 p {
     font-family: "Nanum Gothic"

@@ -20,6 +20,33 @@ var flix_list = [
         year: "2001"
     }];
 
+    var user_list = [
+        {
+            userName: "masterluke",
+            password: "hello"
+        }
+    ]
+
+
+    db.User.deleteMany({}, (err, allUsers) => {
+        
+        if(err) {return console.log(err)}
+        
+        
+    })
+
+
+    db.User.create(user_list, (err, allUsers) => {
+        if(err) {return console.log(err)}
+        return console.log(allUsers)
+    })
+
+
+
+
+
+
+
 
     db.Flix.deleteMany( {}, (err, everythingRemoved) => {
         if(err) { return console.log(err) }
@@ -27,6 +54,9 @@ var flix_list = [
         // when we know we have no more objects, then create new objects
         createFlix();
     });
+
+
+
 
     let createFlix = function(){
         db.Flix.create(flix_list, (err, allFlix) => {

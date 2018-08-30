@@ -59,9 +59,28 @@ $('.signUp').on('mouseleave', function() {
 
 
 
+$('#submitBtn').on('click', (e) => {
+
+e.preventDefault();
+    $.ajax({
+      method: 'POST',
+      data: $('form').serialize(),
+      success: searchPage,
+      error: function onError() {
+      }
+
+    })
+
+
+})
 
 
 
+function searchPage() {
+  window.location.assign('http://localhost:3000/search');
+  console.log('YOU SHOULD LEAVE THIS PAGE!');
+  
+}
 
 
 
