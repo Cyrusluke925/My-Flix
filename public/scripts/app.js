@@ -1,14 +1,14 @@
-require('dotenv').config();
-
 $( document ).ready(function() {
 //api key
-const apiKey = config.API_KEY;
-const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key='+apiKey+"&query=Jack+Reacher";
+const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
+const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
+const end = "&query=Jack+Reacher";
 
 
+$('form').on('submit', e=>{
 $.ajax({
     method: 'GET',
-    url: api_endpoint ,
+    url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query=Sharp%20Objects&page=1&include_adult=false" ,
     success: onSuccess,
     error: onError
   
@@ -24,6 +24,9 @@ $.ajax({
     console.dir(e3)  
   }
 
+});
+
 
   console.log( "ready!" );
 });
+
