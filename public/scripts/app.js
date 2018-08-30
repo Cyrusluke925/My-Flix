@@ -26,18 +26,16 @@ const end = "&query=Jack+Reacher";
         //console.log(formArr.length);
         //console.log("Director value: "+(encodeURI(formArr[3].value)));
 
-        //Title exists nothing else
-        
         
 
-        //
+        //API SEARCH
         if(formArr[0].value !== "" && formArr[3].value === "" ){
 
                 //Title Search
                 console.log("Title Search");
 
                 let title = encodeURI(formArr[0].value);
-                
+
                 $.ajax({
                     method: 'GET',
                     url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
@@ -47,6 +45,31 @@ const end = "&query=Jack+Reacher";
                 });
                 
                 function titleSuccess (response) {
+
+
+                    for(let responseIterator = 0; responseIterator < response.results.length; responseIterator++){
+                        let currentGenres = findGenres(response.results[responseIterator].genre_ids);
+                        if(response.results[responseIterator].poster_path === null){
+                            $('form').append(`
+                                <div>
+                                <p>NO IMAGE</p>
+                                <p>${response.results[responseIterator].original_title}</p>
+                                <p>${response.results[responseIterator].overview}</p>
+                                <button>Like</button>
+                                </div>
+                            `);
+                        }else{
+                            $('form').append(`
+                                <div>
+                                <img src = "https://image.tmdb.org/t/p/w200/${response.results[responseIterator].poster_path}">
+                                <p>Title: ${response.results[responseIterator].original_title}</p>
+                                <p>Description: ${response.results[responseIterator].overview}</p>
+                                <p>Genre: ${currentGenres}</p>
+                                <button>Like</button>
+                                </div>
+                            `);
+                    }
+                }
                     console.log(response);
                 }
                 
@@ -132,7 +155,18 @@ const end = "&query=Jack+Reacher";
 
 
 
+    function findGenres(input){
+        let genresArr = [];
+        for(let v = 0; v < input.length; v++){
+            for(let m = 0; m < genres.length; m++){
+                if(input[v] === genres[m].id){
+                    genresArr.push(genres[m].name);
+                }
+            }
 
+        }
+        return genresArr;
+    }
 
 
 
