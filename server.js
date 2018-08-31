@@ -51,6 +51,16 @@ app.get('/userList', function findUsers(req, res) {
 })
 
 
+app.get('/api/users', function getAllUsers(req, res) {
+    db.User.find({}, (err, allUsers) => {
+        if(err){return console.log(err)};
+        res.json(allUsers);
+    })
+})
+
+
+app.get('/')
+
 
 app.get('/api/flix', (req, res) => {
     db.Flix.find({}, (err, allFlix) => {

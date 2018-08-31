@@ -67,7 +67,9 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                     method: 'GET',
                                     url: `http://api.themoviedb.org/3/tv/${tvId}/videos?language=en-US&api_key=${apiKey}`,
                                     complete: function returnKey(vid) {
-                                        vidKey = vid.responseJSON.results[0].key
+                                        if(vid.responseJSON.results[0].key !== undefined) {
+                                            vidKey = vid.responseJSON.results[0].key
+                                    }
                                       
 
                                         appendfunc();
@@ -77,7 +79,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                                 const appendfunc = function(){
                                   
-
+                                
                             $('.mediaList').append(`
                                 <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
                                 <article class="movieCover">
@@ -90,8 +92,9 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                 <h2 class="title"> ${media.name}</h2>
                                 
 
-                                <article class="sybmols">
+                                <article class="symbols">
                                 <a class=like><i class="far fa-heart"></i></a>
+                                <a data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                                 </article>
                                 
 
