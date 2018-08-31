@@ -1,3 +1,6 @@
+$(document).ready(()=> {
+
+
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
 
@@ -33,31 +36,9 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 
                 function titleSuccess (response) {
 
-               
-
                 response.results.forEach(function(media) {
                     
-                 
-                
                     let currentGenres = findGenres(media.genre_ids);
-                    // if(media.media_type === "tv" && media.poster_path === null || undefined) {
-                    //         $('.mediaList').append(`<section class="listing">
-                    //         <article class="movieCover">
-                    //         <p class="image">NO IMAGE</p>
-                    //         </article>
-                            
-                    //         <article class="movieInfo">
-                    //             <h2 class="title">${media.name}</h2>
-                    //             <p class="description>${media.overview}</p>
-                    //             <p class="genre"> Genre: ${currentGenres}</p>
-                    //             <a class=like><i class="far fa-heart"></i></a>
-                    //         </article>
-                    //         </section>
-                    //         `);
-                    //     }else 
-                    
-                    
-                    
                     
                     if(media.media_type === "tv") {
                                 let tvId = media.id;
@@ -73,6 +54,11 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                       
 
                                         appendfunc();
+                                        $('.symbols').on('click', '.trailer', function(e) {
+                                            e.preventDefault();
+                                            console.log($(this).attr('data-id'))
+                                            $('.paragraph').eq(1).after(`<iframe src="http://www.youtube.com/embed/${$(this).attr('data-id')}" frameborder="0" allowfullscreen></iframe>`)
+                                        })
                                     }
                                 });
 
@@ -94,7 +80,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                                 <article class="symbols">
                                 <a class=like><i class="far fa-heart"></i></a>
-                                <a class="trailer><i class="fab fa-youtube"></i></a>
+                                <a class="trailer" href="#" data-id="${vidKey}"><i class="fab fa-youtube"></i></a>
                                 <a data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                                 </article>
                                 
@@ -102,18 +88,18 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                         
                                 <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
                                 <h3 class="genre">Genre:</h3>\n<p class="paragraph"> ${currentGenres}</p>
-                                <iframe src="http://www.youtube.com/embed/${vidKey}" frameborder="0" allowfullscreen></iframe>
+                                
 
                                 </article>
                                 </section>`
 
                             )};
 
-                    //end of append
+            
 
                                 }
 
-
+                               
                 //     if(media.media_type === "movie" && media.poster_path === null || undefined) {
                 //         $('.mediaList').append(`<section class="listing">
                 //         <article class="movieCover">
@@ -147,15 +133,13 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                         
 
                                         appendMovie();
+
+                                        
                                     }
                                 });
 
 
                     function appendMovie() {
-
-
-                
-
                     $('.mediaList').append(`
                     <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
                     <article class="movieCover">
@@ -187,6 +171,9 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
             };
+
+
+           
                                 
             });
 
@@ -219,13 +206,15 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 }
             }
 
-
+          
+            
+    
             
         });
 
 
-
-
+    });
+      
 
 
 
