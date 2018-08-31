@@ -34,15 +34,8 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 function titleSuccess (response) {
 
                 response.results.forEach(function(media) {
-<<<<<<< HEAD
-                
                     let currentGenres = findGenres(media.genre_ids);
-                    
-=======
-                    
-                    let currentGenres = findGenres(media.genre_ids);
->>>>>>> f34575eef04a8fe4fccabeb731dc1cd9eb508321
-                    
+
                     if(media.media_type === "tv") {
                                 let tvId = media.id;
                                 let vidKey;
@@ -102,9 +95,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                                 }
 
-<<<<<<< HEAD
-
-=======
                                
                 //     if(media.media_type === "movie" && media.poster_path === null || undefined) {
                 //         $('.mediaList').append(`<section class="listing">
@@ -122,7 +112,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 
                 
                 // )} else 
->>>>>>> f34575eef04a8fe4fccabeb731dc1cd9eb508321
                 if (media.media_type === "movie") {
 
                     // console.log(media)
@@ -203,7 +192,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
         }
         return genresArr;
-    }
+    }n
 
                 }
 
@@ -223,18 +212,9 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
         });
 
 
-<<<<<<< HEAD
-
-
-        $(".logout").on('click', e =>{
-            localStorage.clear();
-            console.log("Storage Cleared");
-        });
-=======
     });
       
 
->>>>>>> f34575eef04a8fe4fccabeb731dc1cd9eb508321
 
 
 
