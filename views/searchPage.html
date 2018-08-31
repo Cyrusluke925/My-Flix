@@ -5,22 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Search</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="/styles/styles.css" />
+
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" 
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="/styles/searchPage.css" />
+
     <script
     src="https://code.jquery.com/jquery-3.3.1.js"
     integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous" defer></script>
-    <script src="/scripts/app.js" defer></script>
+    <script src="/scripts/searchPage.js" defer></script>
 </head>
 <body>
+    <header>
+            <nav>
+                    <ul>
+                        <a href="#"><li>My List</li></a>
+                        <a href="#"><li>Find Users</li></a>
+                        <a href="/"><li>Log Out</li></a>
+                    </ul>
+                </nav>
+        <h1>Add Media to Your List!</h1>
+    </header>
+    
 
     <form id="form">
         <input type="text" name="title" placeholder="Title">
         <input type="text" name="year" placeholder="Release Year">
         <input type="text" name="genre" placeholder="Genre">
         <input type="text" name="director" placeholder="Director">
-        <input type="submit"><button>Search</button>
+        <button>Search</button>
     </form>
+
+    <section class="mediaList">
+
+    </section>
     
 </body>
 </html>

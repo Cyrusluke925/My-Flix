@@ -4,10 +4,13 @@ Schema = mongoose.Schema;
 
 
 var flixSchema = new Schema ({
+
+    movieId: Number,
     title: String,
-    img: String,
-    director: String,
-    year: String,
+    poster_path: String,
+    backdrop_path: String,
+    overview: String,
+    userName: String,
 })
 
 
