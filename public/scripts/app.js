@@ -35,7 +35,7 @@ $('.signUp').on('mouseleave', function() {
 
 
 
-new ModalVideo('.js-modal-video');
+
 
   function searchPage() {
     window.location.assign('http://localhost:3000/search');
