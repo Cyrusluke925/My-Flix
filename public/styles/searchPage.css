@@ -4,12 +4,24 @@ body {
 }
 
 
-h1 {
+h1, p, a {
 
     font-family: "nanum gothic";
     text-align: center;
+    
 }
 
+h2 {
+    color: white;
+    font-size: 38px;
+}
+
+h2 {
+    font-family: 'source sans pro';
+    font-size: 3em;
+    margin-bottom: 0.2em;
+    margin-top: 0;
+}
 
 nav {
     
@@ -37,12 +49,29 @@ a {
     color: #9d9d9d
 }
 
-a:hover {
+
+
+
+h3 {
+    font-family: "source sans pro";
     color: white;
+    align-self: flex-start;
+    border-bottom: 1px solid white;
+    font-size: 20px;
+    text-indent: 40px;
+
+   
+
+}
+
+i:hover {
+    color: darkred;
+    
 }
 
 form {
     margin-top: 4em;
+    margin-bottom: 10em;
     height: 25vh;
     
     display: flex;
@@ -66,3 +95,62 @@ input {
 input::placeholder{
     font-size: 1.5em;
 }
+
+
+
+
+section {
+    margin: 5em 0;
+}
+
+.listing {
+    display: flex;
+    margin: 8em 0;
+    background-size: cover;
+    background-position: center;
+    
+}
+
+
+
+.movieInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    background-color:rgba(49, 50, 55, 0.8);
+    width: 100%;
+}
+
+
+
+
+p {
+    font-size: .9em;
+    color: white;
+    flex-direction: flex-start;
+}
+
+
+
+i {
+   font-size: 1.5em;
+}
+
+
+
+.like {
+    display: flex;
+    align-items: center;
+    justify-self: flex-start;
+
+}
+
+
+.paragraph {
+    font-size: 16px;
+    font-family: "source sans pro";
+    align-self: flex-start;
+    text-indent:50px;
+    margin-top: 0;
+    
