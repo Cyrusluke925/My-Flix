@@ -10,17 +10,12 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
         e.preventDefault();
         let formArr = $('form').serializeArray();
 
-        // for(let i=0;i<formArr.length;i++){
-        //     formArr[i].value = inputFormater(formArr[i].value);
-        // }
-
-        
 
         //API SEARCH
         if(formArr[0].value !== "" && formArr[3].value === "" ){
 
                 //Title Search
-                console.log("Title Search");
+        
 
                 let title = encodeURI(formArr[0].value);
 
@@ -34,10 +29,11 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 
                 function titleSuccess (response) {
 
-                console.log(response)
+               
 
                 response.results.forEach(function(media) {
-                
+                    
+                 
                 
                     let currentGenres = findGenres(media.genre_ids);
                     if(media.media_type === "tv" && media.poster_path === null || undefined) {
@@ -63,7 +59,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                     url: `http://api.themoviedb.org/3/tv/${tvId}/videos?language=en-US&api_key=${apiKey}`,
                                     complete: function returnKey(vid) {
                                         vidKey = vid.responseJSON.results[0].key
-                                        console.log(vidKey);
+                                      
 
                                         appendfunc();
                                     }
@@ -71,7 +67,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
                                 const appendfunc = function(){
-                                    console.log(vidKey)
+                                  
 
                             $('.mediaList').append(`
                                 <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
@@ -100,51 +96,84 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                             )};
 
-                    if(media.media_type === "movie" && media.poster_path === null) {
-                        $('.mediaList').append(`<section class="listing">
-                        <article class="movieCover">
-                        <p class="image">NO IMAGE</p>
-                        </article>
-                                
-                        <article class="movieInfo">
-                            <h2 class="title">${media.title}</h2>
-                            <p class="description>${media.overview}</p>
-                            <p class="genre"> Genre: ${currentGenres}</p>
-                            <a class=like><i class="far fa-heart"></i></a>
-                        </article>
-                    </section>`
-                
-                
-                )} else if (media.media_type === "movie") {
-
-                    $('.mediaList').append(`
-                        <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
-                        <article class="movieCover">
-            
-                        <img class="image" src = "https://image.tmdb.org/t/p/w300/${media.poster_path}">
-                       
-                        </article>
-                        <article class="movieInfo" '>
-                    
-                        <h2 class="title"> ${media.title}</h2>
-                        
-
-                        <article class="sybmols">
-                        <a class=like><i class="far fa-heart"></i></a>
-                        </article>
-                        
-
-                
-                        <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
-                        <h3 class="genre">Genre:</h3>\n<p class="paragraph"> ${currentGenres}</p>
-
-                        </article>
-                        </section>`
-                
-                    )};
                     //end of append
 
                                 }
+
+
+                //     if(media.media_type === "movie" && media.poster_path === null || undefined) {
+                //         $('.mediaList').append(`<section class="listing">
+                //         <article class="movieCover">
+                //         <p class="image">NO IMAGE</p>
+                //         </article>
+                                
+                //         <article class="movieInfo">
+                //             <h2 class="title">${media.title}</h2>
+                //             <p class="description>${media.overview}</p>
+                //             <p class="genre"> Genre: ${currentGenres}</p>
+                //             <a class=like><i class="far fa-heart"></i></a>
+                //         </article>
+                //     </section>`
+                
+                
+                // )} else 
+                if (media.media_type === "movie") {
+
+                    // console.log(media)
+
+
+                    // console.log(media)
+                    let movieId = media.id;
+                                let movieKey;
+
+                                $.ajax({
+                                    method: 'GET',
+                                    url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=en-US`,
+                                    complete: function returnKey(vid) {
+                                        movieKey = vid.responseJSON.results[0].key
+                                        
+
+                                        appendMovie();
+                                    }
+                                });
+
+
+                    function appendMovie() {
+
+
+                
+
+                    $('.mediaList').append(`
+                    <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
+                    <article class="movieCover">
+        
+                    <img class="image" src = "https://image.tmdb.org/t/p/w300/${media.poster_path}">
+                   
+                    </article>
+                    <article class="movieInfo" '>
+                
+                    <h2 class="title"> ${media.title}</h2>
+                    
+
+                    <article class="sybmols">
+                    <a class=like><i class="far fa-heart"></i></a>
+                    </article>
+                    
+
+            
+                    <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
+                    <h3 class="genre">Genre:</h3>\n<p class="paragraph"> ${currentGenres}</p>
+                    <iframe src="http://www.youtube.com/embed/${movieKey}" frameborder="0" allowfullscreen></iframe>
+
+                    </article>
+                    </section>`
+            
+                )};
+
+           
+
+
+            };
                                 
             });
 
@@ -184,20 +213,10 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 
-    // function inputFormater(input){
-    //     var str = input.toLowerCase();
-    //     let res =[];
-        
-    //     let splitString = str.split(" ");
-        
-    //        splitString.forEach(elem =>{
-    //     elem = elem.charAt(0).toUpperCase() + elem.substr(1);
-    //     res.push(elem);
-        
-    //        });
-    
-    //     let finalRes = res.join(" ");
-    //     return finalRes;
-    // }
+
+
+
+
+
 
     
