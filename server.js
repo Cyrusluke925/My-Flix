@@ -46,6 +46,10 @@ app.get('/search', function searchPage(req, res) {
 });
 
 
+app.get('/userList', function findUsers(req, res) {
+    res.sendFile('/views/userList.html', {root: __dirname});
+})
+
 
 
 app.get('/api/flix', (req, res) => {

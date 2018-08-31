@@ -78,17 +78,23 @@ form {
     height: 25vh;
     
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
     align-items: center;
+    justify-content: center;
 
 }
 
-button {
+#search {
+    margin-left: 0.8em;
+    margin-right: 1em;
+}
+
+/* button {
     height: 2.5em;
     width: 30em;
     align-self: center;
-}
+} */
 
 input {
     height:3em;
