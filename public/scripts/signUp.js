@@ -13,8 +13,8 @@ $( document ).ready(function() {
                 data: $('form').serialize(),
                 success: searchPage,
                 error: function onError() {
-                    //$('h2').appendAfter("ERROR CREATING ACCOUNT PLEASE TRY AGAIN");
-
+                    let p = `<p style="color:red; margin-top:0px;">Username already exists please try new username</p>`
+                    $('h2').after(p);
                 }
             })
     })  
@@ -23,7 +23,20 @@ $( document ).ready(function() {
     function searchPage(json) {
     
         localStorage.setItem("token", json.signedJwt);
-        console.log(json)
 
+        let p = `<p style="color:green; margin-top:0px;">Account created sucessfully, redirecting...</p>`
+        $('h2').after(p);
+        sleep(2000).then(() => {
+            window.location = "http://localhost:3000/login";
+            console.log(json)
+        })
     }
+
+
+    function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+      }
+
+
+
 });
