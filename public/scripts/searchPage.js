@@ -28,35 +28,11 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 });
 
 
-
-                
-                
                 function titleSuccess (response) {
 
-               
-
                 response.results.forEach(function(media) {
-                    
-                 
                 
                     let currentGenres = findGenres(media.genre_ids);
-                    // if(media.media_type === "tv" && media.poster_path === null || undefined) {
-                    //         $('.mediaList').append(`<section class="listing">
-                    //         <article class="movieCover">
-                    //         <p class="image">NO IMAGE</p>
-                    //         </article>
-                            
-                    //         <article class="movieInfo">
-                    //             <h2 class="title">${media.name}</h2>
-                    //             <p class="description>${media.overview}</p>
-                    //             <p class="genre"> Genre: ${currentGenres}</p>
-                    //             <a class=like><i class="far fa-heart"></i></a>
-                    //         </article>
-                    //         </section>
-                    //         `);
-                    //     }else 
-                    
-                    
                     
                     
                     if(media.media_type === "tv") {
@@ -114,22 +90,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                 }
 
 
-                //     if(media.media_type === "movie" && media.poster_path === null || undefined) {
-                //         $('.mediaList').append(`<section class="listing">
-                //         <article class="movieCover">
-                //         <p class="image">NO IMAGE</p>
-                //         </article>
-                                
-                //         <article class="movieInfo">
-                //             <h2 class="title">${media.title}</h2>
-                //             <p class="description>${media.overview}</p>
-                //             <p class="genre"> Genre: ${currentGenres}</p>
-                //             <a class=like><i class="far fa-heart"></i></a>
-                //         </article>
-                //     </section>`
-                
-                
-                // )} else 
                 if (media.media_type === "movie") {
 
                     // console.log(media)
@@ -192,6 +152,9 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 
+   
+
+
     function findGenres(input){
         if(input === undefined) {
             return console.log('no value')
@@ -226,7 +189,10 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 
-
+        $(".logout").on('click', e =>{
+            localStorage.clear();
+            console.log("Storage Cleared");
+        });
 
 
 
