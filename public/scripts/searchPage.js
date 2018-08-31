@@ -6,7 +6,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
     // $('body').css('background-image', `url('../pictures/signUpCollage.jpg'`)
 
-    $('#search').on('click', e=>{
+    $('form').on('submit', e=>{
         e.preventDefault();
         let formArr = $('form').serializeArray();
 
@@ -94,6 +94,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                                 <article class="symbols">
                                 <a class=like><i class="far fa-heart"></i></a>
+                                <a class="trailer><i class="fab fa-youtube"></i></a>
                                 <a data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                                 </article>
                                 
