@@ -124,3 +124,26 @@ a {
     border-bottom: 1px solid black;
     
 }
+
+
+
+
+@media screen and (max-width: 530px) {
+    input[type="text"] {
+        font-size:20px;
+        max-width: 60%;
+        height: 2em;
+        width: 100%;
+        
+    }
+    
+    
+    
+    input[type="password"] {
+        font-size:20px;
+        max-width: 60%;
+        height: 2em;
+        width: 100%;
+        
+    }
+}
