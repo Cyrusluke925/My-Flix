@@ -49,6 +49,9 @@ a {
     color: #9d9d9d
 }
 
+a:hover{
+    color:white;
+}
 
 
 
@@ -58,7 +61,7 @@ h3 {
     align-self: flex-start;
     border-bottom: 1px solid white;
     font-size: 20px;
-    text-indent: 40px;
+    margin-left: 25px;
 
    
 
@@ -153,4 +156,4 @@ i {
     align-self: flex-start;
     text-indent:50px;
     margin-top: 0;
-    
+}
