@@ -36,7 +36,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                 response.results.forEach(function(media) {
                     let currentGenres = findGenres(media.genre_ids);
 
-                    
                     if(media.media_type === "tv") {
                                 let tvId = media.id;
                                 let vidKey;
@@ -164,38 +163,27 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
             
                 )};
 
-           
-
-
-            };
-
-
-           
+                };
                                 
             });
 
+            function findGenres(input){
+                        if(input === undefined) {
+                            return console.log('no value')
+                        }
+                        let genresArr = [];
+                        for(let v = 0; v < input.length; v++){
+                            for(let m = 0; m < genres.length; m++){
+                                if(input[v] === genres[m].id){
+                                    genresArr.push(genres[m].name);
+                                }
+                            }
 
+                        }
+                        return genresArr;
+                    }n
 
-   
-
-
-    function findGenres(input){
-        if(input === undefined) {
-            return console.log('no value')
-        }
-        let genresArr = [];
-        for(let v = 0; v < input.length; v++){
-            for(let m = 0; m < genres.length; m++){
-                if(input[v] === genres[m].id){
-                    genresArr.push(genres[m].name);
-                }
             }
-
-        }
-        return genresArr;
-    }
-
-                }
 
 
 
@@ -214,14 +202,32 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 
+        //Code for saving user favorite flix
+        
 
-        $(".logout").on('click', e =>{
-            localStorage.clear();
-            console.log("Storage Cleared");
-        });
+        document.getElementById("parent-list").addEventListener('click',  e =>{
+            console.log("Heart clicked");
+            e.preventDefault();
+
+            $.ajax({
+                method: 'GET',
+                url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
+                data: { 
+                    searchMovieId: "hello", 
+                    searchMovieTitle: "hello2",
+                    searchMoviePoster_Path: "hello2",
+                    searchMovieBackdrop_Path: "hello2",
+                    searchMovieOverview: "hello2",
+                    loggedInUser: "hello2",
+                } ,
+                success: titleSuccess,
+                error: titleError
+            
+            });
+
+
+        })
 
 
 
-
-    });
-    
+});

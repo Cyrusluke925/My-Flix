@@ -4,15 +4,36 @@ $( document ).ready(function() {
     $('#submitBtn').on('click', (e) => {
   
         e.preventDefault();
+
             $.ajax({
               method: 'POST',
               data: $('form').serialize(),
-              success: searchPage,
+              success: loginSuccess,
               error: function onError() {
+                let p = `<p style="color:red; margin-top:0px;">Username/Password incorrect please try again</p>`
+                $('.loginErrors').empty().append(p);
               }
-        
             });
+
+
+            function loginSuccess(json) {
+              localStorage.setItem("token", json.signedJwt);
+
+              window.location.assign('http://localhost:3000/search');
+              console.log('YOU SHOULD LEAVE THIS PAGE!');
+            }
+
+
+
+            function loginSuccess(json) {
+              localStorage.setItem("token", json.signedJwt);
+              window.location.assign('http://localhost:3000/search');
+              console.log('YOU SHOULD LEAVE THIS PAGE!');
+                
+            }
+
         });
+      });
 
 
     checkForLogin()
@@ -42,21 +63,7 @@ $( document ).ready(function() {
         $('#noToken').toggleClass('show');
       }
     }
-    
-
-
-
-    function searchPage() {
-        window.location.assign('http://localhost:3000/search');
-        console.log('YOU SHOULD LEAVE THIS PAGE!');
-        
-      }
-
-});
-
-
-
-
+  
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
