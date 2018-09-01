@@ -264,6 +264,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
             
                 )};
 
+<<<<<<< HEAD
         
 
 
@@ -271,11 +272,29 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
         
+=======
+                };
+>>>>>>> 102aec304e6809000606882936ea230baa1e9e34
                                 
             });
 
+            function findGenres(input){
+                        if(input === undefined) {
+                            return console.log('no value')
+                        }
+                        let genresArr = [];
+                        for(let v = 0; v < input.length; v++){
+                            for(let m = 0; m < genres.length; m++){
+                                if(input[v] === genres[m].id){
+                                    genresArr.push(genres[m].name);
+                                }
+                            }
 
+                        }
+                        return genresArr;
+                    }n
 
+<<<<<<< HEAD
 
 
 
@@ -297,6 +316,10 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                 }
 
+=======
+            }
+
+>>>>>>> 102aec304e6809000606882936ea230baa1e9e34
 
 
                 function titleError (e1, e2, e3) {
@@ -315,15 +338,45 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 
+<<<<<<< HEAD
 
 
 });
       
+=======
+>>>>>>> 102aec304e6809000606882936ea230baa1e9e34
+
+        //Code for saving user favorite flix
+        
+
+        $('.fa-heart').addEventListener('click',  e =>{
+            console.log("Heart clicked");
+            e.preventDefault();
+
+            $.ajax({
+                method: 'GET',
+                url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
+                data: { 
+                    searchMovieId: "hello", 
+                    searchMovieTitle: "hello2",
+                    searchMoviePoster_Path: "hello2",
+                    searchMovieBackdrop_Path: "hello2",
+                    searchMovieOverview: "hello2",
+                    loggedInUser: "hello2",
+                } ,
+                success: titleSuccess,
+                error: titleError
+            
+            });
+
+
+        })
 
 
 
+<<<<<<< HEAD
 
 
-
-
-
+=======
+});
+>>>>>>> 102aec304e6809000606882936ea230baa1e9e34
