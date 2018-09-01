@@ -143,9 +143,14 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                                     
                                             </article>
                                             <article class='castAndCrew'>
-                                            <h3 class="descriptionTitle">Cast</h3>
+                                            <h3 class="castTitle">Cast</h3>
                                             <article class="cast">
                                             
+                                            </article>
+                                            <hr class='horizontal'>
+                                            <h3 class="crewTitle">Crew</h3>
+                                            <article class="crew">
+                                           
                                             </article>
                                             </article>
         
@@ -153,12 +158,26 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                                             for (var i = 0; i < 5; i+= 1) {
                                                 var person = credits.cast[i];
-
-                                                $('.cast').append(`<article class='person'><img src="https://image.tmdb.org/t/p/w200${person.profile_path}">
+                                                if(person.profile_path !== null) {
+                                                    $('.cast').append(`<article class='person'><img src="https://image.tmdb.org/t/p/w200${person.profile_path}">
                                                 <h4 class="actorName">${person.name}</h4>
                                                 <p class='character'>${person.character}</p>
                                                 </article>`)
+                                                }
+                                            
                                                 
+                                            }
+
+                                            for (var i = 0; i < 5; i += 1) {
+                                                var person = credits.crew[i];
+                                                if(person.profile_path !==null) {
+                                                    $('.crew').append(`<article class='person'><img src="https://image.tmdb.org/t/p/w200${person.profile_path}">
+                                                <h4 class="actorName">${person.name}</h4>
+                                                <p class='character'>${person.department}</p>`)
+
+                                                }
+                                             
+
                                             }
 
                                             
@@ -264,7 +283,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
             
                 )};
 
-<<<<<<< HEAD
         
 
 
@@ -272,9 +290,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
         
-=======
-                };
->>>>>>> 102aec304e6809000606882936ea230baa1e9e34
                                 
             });
 
@@ -294,7 +309,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                         return genresArr;
                     }n
 
-<<<<<<< HEAD
 
 
 
@@ -316,10 +330,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                 }
 
-=======
-            }
-
->>>>>>> 102aec304e6809000606882936ea230baa1e9e34
 
 
                 function titleError (e1, e2, e3) {
@@ -338,45 +348,38 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 
-<<<<<<< HEAD
 
 
 });
       
-=======
->>>>>>> 102aec304e6809000606882936ea230baa1e9e34
 
         //Code for saving user favorite flix
         
 
-        $('.fa-heart').addEventListener('click',  e =>{
-            console.log("Heart clicked");
-            e.preventDefault();
+        // $('.fa-heart').addEventListener('click',  e =>{
+        //     console.log("Heart clicked");
+        //     e.preventDefault();
 
-            $.ajax({
-                method: 'GET',
-                url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
-                data: { 
-                    searchMovieId: "hello", 
-                    searchMovieTitle: "hello2",
-                    searchMoviePoster_Path: "hello2",
-                    searchMovieBackdrop_Path: "hello2",
-                    searchMovieOverview: "hello2",
-                    loggedInUser: "hello2",
-                } ,
-                success: titleSuccess,
-                error: titleError
+        //     $.ajax({
+        //         method: 'GET',
+        //         url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
+        //         data: { 
+        //             searchMovieId: "hello", 
+        //             searchMovieTitle: "hello2",
+        //             searchMoviePoster_Path: "hello2",
+        //             searchMovieBackdrop_Path: "hello2",
+        //             searchMovieOverview: "hello2",
+        //             loggedInUser: "hello2",
+        //         } ,
+        //         success: titleSuccess,
+        //         error: titleError
             
-            });
+        //     });
 
 
-        })
+        // })
 
 
 
-<<<<<<< HEAD
 
 
-=======
-});
->>>>>>> 102aec304e6809000606882936ea230baa1e9e34

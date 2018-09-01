@@ -228,6 +228,9 @@ i {
     display: flex; 
     justify-content: space-between;
     padding-top: 50px;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: rgba(49,50,55, 0.3);
     
 }
 
@@ -246,4 +249,44 @@ i {
 .castAndCrew {
     background-color: rgba(49,50,55, 0.8);
     
+}
+
+.castTitle {
+    display: inline-block;
+    font-size: 2.5em;
+    margin-top: 3em;
+    margin-bottom: 0;
+    margin-left: 2.5em;
+
+    
+
+}
+
+.whiteLine {
+    color: white;
+}
+
+
+.crew {
+    display: flex; 
+    justify-content: space-between;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: rgba(49,50,55, 0.8);
+    align-items: center;
+
+}
+
+
+.crewTitle {
+    display: inline-block;
+    font-size: 2.5em;
+    margin-top: 1em;
+    margin-bottom: 0.3;
+    margin-left: 2.5em;
+}
+
+.horizontal {
+    position: relative;
+    top: 3em;
 }
