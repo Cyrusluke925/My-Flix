@@ -183,8 +183,11 @@ app.post('/login', (req, res) => {
 
                         });
             
-                    }
-        })
+        }else{
+            return res.status(401).json({message: 'Username/Password incorrect'})
+        }
+
+    })
 });
         
 
