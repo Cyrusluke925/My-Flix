@@ -1,5 +1,8 @@
 $(document).ready(()=> {
 
+let userSignedIn;
+
+
 checkForLogin();
 
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
@@ -12,6 +15,29 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
     $('form').on('submit', e=>{
         e.preventDefault();
+
+        loadPage();
+    })
+
+
+   
+    $('#search').on('click', e=> {
+        e.preventDefault();
+
+        loadPage()
+    })
+
+
+
+
+
+
+function loadPage() {
+
+        if( $('.mediaList').length > 0) {
+            $('.mediaList').empty()
+        }
+    
         let formArr = $('form').serializeArray();
 
 
@@ -19,10 +45,10 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
         if(formArr[0].value !== ""){
 
                 //Title Search
-        
+            let title = encodeURI(formArr[0].value);
 
-                let title = encodeURI(formArr[0].value);
-
+               
+               //AJAX CALL TO MOVIE DB API
                 $.ajax({
                     method: 'GET',
                     url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
@@ -30,39 +56,156 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                     error: titleError
                 
                 });
+            }
+        };
 
 
                 function titleSuccess (response) {
+                    
 
                 response.results.forEach(function(media) {
                     let currentGenres = findGenres(media.genre_ids);
+                  
 
                     if(media.media_type === "tv") {
+                        // console.log('type is tv')
+                     
                                 let tvId = media.id;
                                 let vidKey;
+                                    
+                                appendfunc(media)
 
-                                $.ajax({
-                                    method: 'GET',
-                                    url: `http://api.themoviedb.org/3/tv/${tvId}/videos?language=en-US&api_key=${apiKey}`,
-                                    complete: function returnKey(vid) {
-                                        if(vid.responseJSON.results[0].key !== undefined) {
-                                            vidKey = vid.responseJSON.results[0].key
-                                    }
-                                      
+                                         $('.symbols').on('click', '.info', function(e) {
 
-                                        appendfunc();
-                                        $('.symbols').on('click', '.trailer', function(e) {
-                                            e.preventDefault();
-                                            console.log($(this).attr('data-id'))
-                                            $('.paragraph').eq(1).after(`<iframe src="http://www.youtube.com/embed/${$(this).attr('data-id')}" frameborder="0" allowfullscreen></iframe>`)
+                                            $.ajax({
+                                                method: 'GET',
+                                                url: `https://api.themoviedb.org/3/tv/${$(this).attr('data-id')}?api_key=${apiKey}`,
+                                                complete: singleAppendTv
+                                            })
+
+                                            
+                                        })
+                                
+                                const singleAppendTv = function(e) {
+                                
+                                    $('.mediaList').empty();
+                                    var tvShow = e.responseJSON;
+
+                                    $.ajax({
+                                        method: "GET",
+                                        url: `https://api.themoviedb.org/3/tv/${tvShow.id}/credits?api_key=${apiKey}`,
+                                        complete: function findCredits(response) {
+                                           
+                                            var credits = response.responseJSON;
+
+                                            $('body').css('background-color',  'rgba(49,50,55, 0.8)');
+                                            $('form').css('margin-bottom', '20px');
+                                
+
+                                            $('.mediaList').css('margin-top', '0').append(`<section class="show" style='background-image:url("https://image.tmdb.org/t/p/original${tvShow.backdrop_path}")' style='background-size:cover'>
+                                                
+                                            <article class="header" style='background-color:rgba(49, 50, 55, 0.8)'>
+                                                    <img src="https://image.tmdb.org/t/p/w400/${tvShow.poster_path}">
+                                                    
+                                                    <article class="titleAndDescription">
+                                                    <h1 class=detailTitle>${tvShow.name}</h1>
+                                                    <h3 class="descriptionTitle">Description</h3> \n <p class="descriptionText" id="video">${media.overview}</p>
+                                                    
+
+                                                    <section class="subInfo">
+                                                        <article class="leftColumn">
+                                                            <article class="type">
+                                                                <h3 class='descriptionTitle'>Genre</h3> \n <p class="descriptionText">${currentGenres}</p>
+                                                            </article>
+                                                            <article class="numberOfEps">
+                                                                <h3 class='descriptionTitle'>Number Of Episodes</h3> \n <p class="descriptionText">${tvShow.number_of_episodes} episodes</p>
+                                                            </article>
+                                                        </article>
+                                                        <article class="rightColumn">
+                                                            <article class="network">
+                                                                <h3 class="descriptionTitle">Network</h3> \n <p class="descriptionText">${tvShow.networks[0].name}</p>
+                                                            </article>
+                                                            <article class="runTime">
+                                                            <h3 class="descriptionTitle">Run Time</h3> \n <p class="descriptionText">${tvShow.episode_run_time} mins</p>
+                                                            </article>
+                                                        </article>  
+                                                    
+                                                    </section>
+                                                    
+                                                
+                                                    </article>
+                                                    
+                                            </article>
+                                            <article class='castAndCrew'>
+                                            <h3 class="castTitle">Cast</h3>
+                                            <article class="cast">
+                                            
+                                            </article>
+                                            <hr class='horizontal'>
+                                            <h3 class="crewTitle">Crew</h3>
+                                            <article class="crew">
+                                        
+                                            </article>
+                                            </article>
+        
+                                            </section>`)
+
+                                            for (var i = 0; i < 5; i+= 1) {
+                                                var person = credits.cast[i];
+                                                if(person.profile_path !== null) {
+                                                    $('.cast').append(`<article class='person'><img src="https://image.tmdb.org/t/p/w200${person.profile_path}">
+                                                <h4 class="actorName">${person.name}</h4>
+                                                <p class='character'>${person.character}</p>
+                                                </article>`)
+                                                }
+                                            
+                                                
+                                            }
+
+                                            for (var i = 0; i < 5; i += 1) {
+                                                var person = credits.crew[i];
+                                                if(person.profile_path !==null) {
+                                                    $('.crew').append(`<article class='person'><img src="https://image.tmdb.org/t/p/w200${person.profile_path}">
+                                                <h4 class="actorName">${person.name}</h4>
+                                                <p class='character'>${person.department}</p>`)
+
+                                                }
+                                             
+
+                                            }
+
+
+                                        $.ajax({
+                                            method: "GET",
+                                            url: `https://api.themoviedb.org/3/tv/${tvShow.id}/videos?api_key=${apiKey}&language=en-US`,
+                                            success: function(vid) {
+                                                if (vid.results.length > 0) {
+                                                    let vidKey = vid.results[0].key
+                                                    $('#video').after(`<a id="trailer" data-id=${vid.results[0].key} style='margin-left: 100px'><i class="fab fa-youtube"></i></a>`)
+
+                                                    $('#trailer').on('click', function(trailer) {
+                                                        // $('.castAndCrew').empty();
+                                                        if($('div').length === 0) {
+                                                            $('.castAndCrew').prepend(`<div><iframe allowFullScreen='allowFullScreen' width="640" height="390"
+                                                            src="http://www.youtube.com/embed/${vidKey}"
+                                                            frameborder="0"></iframe></div>`)
+                                                            $('.castTitle').css('margin-top', '0');
+                                                        }
+                                                    
+                                                    })
+                                                }
+                                            }
+                                            
                                         })
                                     }
-                                });
+                                })
 
-
-                                const appendfunc = function(){
-                                  
+                            }
                                 
+                                
+                            function appendfunc(){
+                                
+                             $('body').css('background-color',  '#e0e3e7')
                             $('.mediaList').append(`
                                 <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
                                 <article class="movieCover">
@@ -76,9 +219,8 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                 
 
                                 <article class="symbols">
-                                <a class=like><i class="far fa-heart"></i></a>
-                                <a class="trailer" href="#" data-id="${vidKey}"><i class="fab fa-youtube"></i></a>
-                                <a data-id=${media.id}><i class="fas fa-info-circle"></i></a>
+                                <a href="#" class=like><i class="far fa-heart"></i></a>
+                                <a href="#" class="info" data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                                 </article>
                                 
 
@@ -91,82 +233,15 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                                 </section>`
 
                             )};
+                        };
+                        // END OF TV SECTION;
 
-            
-
-                                }
-
-                               
-                //     if(media.media_type === "movie" && media.poster_path === null || undefined) {
-                //         $('.mediaList').append(`<section class="listing">
-                //         <article class="movieCover">
-                //         <p class="image">NO IMAGE</p>
-                //         </article>
-                                
-                //         <article class="movieInfo">
-                //             <h2 class="title">${media.title}</h2>
-                //             <p class="description>${media.overview}</p>
-                //             <p class="genre"> Genre: ${currentGenres}</p>
-                //             <a class=like><i class="far fa-heart"></i></a>
-                //         </article>
-                //     </section>`
-                
-                
-                // )} else 
-                if (media.media_type === "movie") {
-
-                    // console.log(media)
+    
 
 
-                    // console.log(media)
-                    let movieId = media.id;
-                                let movieKey;
-
-                                $.ajax({
-                                    method: 'GET',
-                                    url: `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=en-US`,
-                                    complete: function returnKey(vid) {
-                                        movieKey = vid.responseJSON.results[0].key
-                                        
-
-                                        appendMovie();
-
-                                        
-                                    }
-                                });
-
-
-                    function appendMovie() {
-                    $('.mediaList').append(`
-                    <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
-                    <article class="movieCover">
         
-                    <img class="image" src = "https://image.tmdb.org/t/p/w300/${media.poster_path}">
-                   
-                    </article>
-                    <article class="movieInfo" '>
-                
-                    <h2 class="title"> ${media.title}</h2>
-                    
-
-                    <article class="sybmols">
-                    <a class=like><i class="far fa-heart"></i></a>
-                    </article>
-                    
-
-            
-                    <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
-                    <h3 class="genre">Genre:</h3>\n<p class="paragraph"> ${currentGenres}</p>
-                    <iframe src="http://www.youtube.com/embed/${movieKey}" frameborder="0" allowfullscreen></iframe>
-
-                    </article>
-                    </section>`
-            
-                )};
-
-                };
                                 
-            });
+        });
 
             function findGenres(input){
                         if(input === undefined) {
@@ -182,9 +257,28 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
                         }
                         return genresArr;
-                    }n
+                    }
 
+
+
+
+    function findGenres(input){
+        if(input === undefined) {
+            return console.log('no value')
+        }
+        let genresArr = [];
+        for(let v = 0; v < input.length; v++){
+            for(let m = 0; m < genres.length; m++){
+                if(input[v] === genres[m].id){
+                    genresArr.push(genres[m].name);
+                }
             }
+
+        }
+        return genresArr;
+    }
+
+                }
 
 
 
@@ -193,42 +287,10 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                     console.log(e2)
                     console.dir(e3)  
                 }
-            }
+
 
           
-            
-        });
-
-
-
-        //Code for saving user favorite flix
-
-        $('.mediaList').on('click', '.fa-heart', e =>{
-            console.log("Heart clicked");
-            e.preventDefault();
-
-            let movieId = "";
-            let movTitle = "";
-            let movPosPath = "";
-            let movBackPath = "";
-            let movOverview = "";
-            let loggedUser = "";
-
-            $.ajax({
-                method: 'GET',
-                url: "" ,
-                data: { 
-                    searchMovieId: movieId, 
-                    searchMovieTitle: movTitle,
-                    searchMoviePoster_Path: movPosPath,
-                    searchMovieBackdrop_Path: movBackPath,
-                    searchMovieOverview: movOverview,
-                    loggedInUser: loggedUser,
-                } ,
-                success: sendMovieSuccess,
-                error: sendMovieError
-            
-            });
+ 
 
             function sendMovieSuccess(){
 
@@ -237,7 +299,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
             function sendMovieError(){
                 
             }
-        });
 
 
 
@@ -270,6 +331,7 @@ function checkForLogin(){
       console.log("success")
       console.log(response)
       user = { username: response.username }
+      userSignedIn = user;
       console.log("you can access variable user: " , user)
         //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
     }).fail(function (err) {

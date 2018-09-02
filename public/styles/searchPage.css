@@ -171,3 +171,170 @@ i {
     justify-content: space-around;
     width: 30%;
 }
+
+
+
+
+
+
+/* *****************************DETAILED EXPANSION CSS********************************************* */
+
+.show {
+    margin-top: 0;
+}
+
+.header {
+    display: flex;
+}
+
+
+.detailTitle {
+    width: 100%;
+    font-family: "source sans pro";
+    color: white;
+    font-size: 5em;
+    margin-top: 0;
+    justify-self: center;
+    margin-bottom: 0;
+}
+
+.about {
+    margin: 0;
+}
+
+.descriptionTitle {
+    display: inline-block;
+    font-size: 1.5em;
+}
+
+.descriptionText {
+    color: white;
+    font-family: "source sans pro";
+    margin-left: 3em;
+    font-size: 1.15em;
+    margin-top: 0;
+    text-align: left;
+    display: inline-block;
+}
+
+
+.show {
+    background-size: cover;
+    background-position: center;
+}
+
+
+.cast {
+    
+    display: flex; 
+    justify-content: space-between;
+    padding-top: 50px;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: rgba(49,50,55, 0.3);
+    
+}
+
+.person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actorName {
+    color: white;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.castAndCrew {
+    background-color: rgba(49,50,55, 0.8);
+    
+}
+
+.castTitle {
+    display: inline-block;
+    font-size: 2.5em;
+    margin-top: 3em;
+    margin-bottom: 0;
+    margin-left: 2.5em;
+
+    
+
+}
+
+.whiteLine {
+    color: white;
+}
+
+
+.crew {
+    display: flex; 
+    justify-content: space-around;
+    padding-left: 1em;
+    padding-right: 1em;
+    background: rgba(49,50,55, 0.3);
+    align-items: center;
+
+}
+
+
+.crewTitle {
+    display: inline-block;
+    font-size: 2.5em;
+    margin-top: 1em;
+    margin-bottom: 0.3;
+    margin-left: 2.5em;
+}
+
+.horizontal {
+    position: relative;
+    top: 3em;
+}
+
+
+.subInfo {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.network {
+    display: flex;
+    flex-direction: column;
+}
+
+.type {
+    display: flex;
+    flex-direction: column;
+}
+
+.numberOfEps {
+    display: flex;
+    flex-direction: column;
+}
+
+.runTime {
+    display: flex;
+    flex-direction: column;
+}
+
+
+div {
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
