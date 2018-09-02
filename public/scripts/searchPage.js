@@ -197,8 +197,6 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
           
             
-    
-            
         });
 
 
@@ -242,6 +240,18 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
         });
 
 
+
+
+
+        $('.logout').on('click', e=>{
+            console.log("Clicked");
+            e.preventDefault();
+            localStorage.clear();
+            window.location = "http://localhost:3000/login";
+            
+        });
+
+
 });
 
 
@@ -257,11 +267,13 @@ function checkForLogin(){
       }
 
     }).done(function (response) {
+      console.log("success")
       console.log(response)
       user = { username: response.username }
       console.log("you can access variable user: " , user)
         //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
     }).fail(function (err) {
+        console.log("FAIL")
         console.log(err);
         sleep(500).then(() => {
             window.location = "http://localhost:3000/login";

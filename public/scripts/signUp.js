@@ -21,7 +21,7 @@ $( document ).ready(function() {
 
 
     function signupSuccess(json) {
-    
+        localStorage.clear();
         localStorage.setItem("token", json.signedJwt);
 
         let p = `<p style="color:green; margin-top:0px;">Account created sucessfully, redirecting...</p>`

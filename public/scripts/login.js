@@ -18,6 +18,7 @@ $( document ).ready(function() {
 
 
             function loginSuccess(json) {
+              localStorage.clear();
               localStorage.setItem("token", json.signedJwt);
               window.location.assign('http://localhost:3000/search');
               console.log('YOU SHOULD LEAVE THIS PAGE!');
