@@ -46,12 +46,6 @@ app.get('/search', function homepage(req, res) {
     res.sendFile('views/searchPage.html' , { root : __dirname});
 });
 
-
-app.get('/search', function searchPage(req, res) {
-    res.sendFile('/views/searchPage.html', {root: __dirname});
-});
-
-
 app.get('/userList', function findUsers(req, res) {
     res.sendFile('/views/userList.html', {root: __dirname});
 })
@@ -77,7 +71,6 @@ app.get('/api/flix', (req, res) => {
         res.json(allFlix);
     })
 })
-
 
 
 
@@ -128,15 +121,17 @@ app.post('/signup', (req,res)=>{
                                     message: 'User Created',
                                     username,
                                     signedJwt
-                                })
+                            })
 
-                            });
                         });
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
     });
+});
+
+
 
 app.post('/login', (req, res) => {
     console.log("LOGIN CALLED");
@@ -197,7 +192,7 @@ app.post('/login', (req, res) => {
         let verified= jwt.verify(req.token, 'vampires')
         //console.log("verified: ", verified)
         res.json(verified)
-      })
+    })
 
 
 

@@ -1,5 +1,9 @@
 $(document).ready(()=> {
 
+let userSignedIn;
+
+
+checkForLogin();
 
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
@@ -286,12 +290,65 @@ function loadPage() {
                     console.log(e2)
                     console.dir(e3)  
                 }
-        });
+
 
           
  
 
+            function sendMovieSuccess(){
+
+            }
+
+            function sendMovieError(){
+                
+            }
 
 
 
+
+
+        $('.logout').on('click', e=>{
+            console.log("Clicked");
+            e.preventDefault();
+            localStorage.clear();
+            window.location = "http://localhost:3000/login";
+            
+        });
+
+
+});
+
+
+function checkForLogin(){
+  if(localStorage.length > 0){
+
+    let jwt = localStorage.token
+    $.ajax({
+      type: "POST",
+      url: '/verify',  
+      beforeSend: function (xhr) {   
+          xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
+      }
+
+    }).done(function (response) {
+      console.log("success")
+      console.log(response)
+      user = { username: response.username }
+      userSignedIn = user;
+      console.log("you can access variable user: " , user)
+        //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
+    }).fail(function (err) {
+        console.log("FAIL")
+        console.log(err);
+        sleep(500).then(() => {
+            window.location = "http://localhost:3000/login";
+            
+          })
+    });
+  }
+}
+
+function sleep (time) {
+return new Promise((resolve) => setTimeout(resolve, time));
+}
 

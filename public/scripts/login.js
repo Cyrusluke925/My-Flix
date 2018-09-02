@@ -16,16 +16,9 @@ $( document ).ready(function() {
             });
 
 
-            function loginSuccess(json) {
-              localStorage.setItem("token", json.signedJwt);
-
-              window.location.assign('http://localhost:3000/search');
-              console.log('YOU SHOULD LEAVE THIS PAGE!');
-            }
-
-
 
             function loginSuccess(json) {
+              localStorage.clear();
               localStorage.setItem("token", json.signedJwt);
               window.location.assign('http://localhost:3000/search');
               console.log('YOU SHOULD LEAVE THIS PAGE!');
@@ -42,11 +35,12 @@ $( document ).ready(function() {
     
         let jwt = localStorage.token
         $.ajax({
-          type: "POST", //GET, POST, PUT
+          type: "POST",
           url: '/verify',  
           beforeSend: function (xhr) {   
               xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
           }
+
         }).done(function (response) {
           console.log(response)
           user = { username: response.username, _id: response._id }
@@ -54,13 +48,11 @@ $( document ).ready(function() {
             $('#message').text(`Welcome, ${ response.username || response.result.username } `);
             sleep(500).then(() => {
               window.location = "http://localhost:3000/search";
-          })
+              
+            })
         }).fail(function (err) {
             console.log(err);
         });
-        $('#yesToken').toggleClass('show');
-      } else {
-        $('#noToken').toggleClass('show');
       }
     }
   
