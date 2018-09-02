@@ -46,6 +46,14 @@ app.get('/search', function homepage(req, res) {
     res.sendFile('views/searchPage.html' , { root : __dirname});
 });
 
+
+app.post('/search', (req,res) =>{
+    // db.Flix.create(flixEntry ,  (err, ))
+
+})
+
+
+
 app.get('/userList', function findUsers(req, res) {
     res.sendFile('/views/userList.html', {root: __dirname});
 })
@@ -190,7 +198,7 @@ app.post('/login', (req, res) => {
 
     app.post('/verify', verifyToken, (req, res) => {
         let verified= jwt.verify(req.token, 'vampires')
-        //console.log("verified: ", verified)
+        console.log("verified: ", verified)
         res.json(verified)
     })
 

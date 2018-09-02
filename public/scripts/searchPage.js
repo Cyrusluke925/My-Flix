@@ -1,7 +1,5 @@
 $(document).ready(()=> {
 
-let userSignedIn;
-
 
 checkForLogin();
 
@@ -311,7 +309,7 @@ function loadPage() {
             window.location = "http://localhost:3000/login";
             
         });
-
+    
 
 });
 
@@ -331,8 +329,9 @@ function checkForLogin(){
       console.log("success")
       console.log(response)
       user = { username: response.username }
-      userSignedIn = user;
       console.log("you can access variable user: " , user)
+      let p = `<p hidden id="currentUser">${response.username}</p>`
+      $(p).appendTo('h1');
         //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
     }).fail(function (err) {
         console.log("FAIL")
