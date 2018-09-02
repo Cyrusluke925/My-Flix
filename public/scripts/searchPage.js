@@ -1,5 +1,6 @@
 $(document).ready(()=> {
 
+checkForLogin();
 
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
@@ -212,7 +213,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
             let movTitle = "";
             let movPosPath = "";
             let movBackPath = "";
-            let movTitle = "";
+            let movOverview = "";
             let loggedUser = "";
 
             $.ajax({
@@ -223,7 +224,7 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
                     searchMovieTitle: movTitle,
                     searchMoviePoster_Path: movPosPath,
                     searchMovieBackdrop_Path: movBackPath,
-                    searchMovieOverview: "hello2",
+                    searchMovieOverview: movOverview,
                     loggedInUser: loggedUser,
                 } ,
                 success: sendMovieSuccess,
@@ -242,3 +243,35 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
 });
+
+
+function checkForLogin(){
+  if(localStorage.length > 0){
+
+    let jwt = localStorage.token
+    $.ajax({
+      type: "POST",
+      url: '/verify',  
+      beforeSend: function (xhr) {   
+          xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
+      }
+
+    }).done(function (response) {
+      console.log(response)
+      user = { username: response.username }
+      console.log("you can access variable user: " , user)
+        //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
+    }).fail(function (err) {
+        console.log(err);
+        sleep(500).then(() => {
+            window.location = "http://localhost:3000/login";
+            
+          })
+    });
+  }
+}
+
+function sleep (time) {
+return new Promise((resolve) => setTimeout(resolve, time));
+}
+
