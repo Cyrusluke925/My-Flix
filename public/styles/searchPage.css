@@ -214,6 +214,7 @@ i {
     font-size: 1.15em;
     margin-top: 0;
     text-align: left;
+    display: inline-block;
 }
 
 
@@ -269,10 +270,10 @@ i {
 
 .crew {
     display: flex; 
-    justify-content: space-between;
+    justify-content: space-around;
     padding-left: 1em;
     padding-right: 1em;
-    background: rgba(49,50,55, 0.8);
+    background: rgba(49,50,55, 0.3);
     align-items: center;
 
 }
@@ -289,4 +290,43 @@ i {
 .horizontal {
     position: relative;
     top: 3em;
+}
+
+
+.subInfo {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.network {
+    display: flex;
+    flex-direction: column;
+}
+
+.type {
+    display: flex;
+    flex-direction: column;
+}
+
+.numberOfEps {
+    display: flex;
+    flex-direction: column;
+}
+
+.runTime {
+    display: flex;
+    flex-direction: column;
 }
