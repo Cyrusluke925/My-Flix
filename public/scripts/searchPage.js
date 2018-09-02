@@ -200,7 +200,7 @@ function loadPage() {
                                 
                                 
                             function appendfunc(){
-                                
+                                console.log(media)
                              $('body').css('background-color',  '#e0e3e7')
                             $('.mediaList').append(`
                                 <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
@@ -229,6 +229,9 @@ function loadPage() {
                                 </section>`
 
                             )};
+
+
+
                         };
                         // END OF TV SECTION;
 
