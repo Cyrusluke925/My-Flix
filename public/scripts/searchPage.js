@@ -203,31 +203,42 @@ let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 1
 
 
         //Code for saving user favorite flix
-        
 
-        document.getElementById("parent-list").addEventListener('click',  e =>{
+        $('.mediaList').on('click', '.fa-heart', e =>{
             console.log("Heart clicked");
             e.preventDefault();
 
+            let movieId = "";
+            let movTitle = "";
+            let movPosPath = "";
+            let movBackPath = "";
+            let movTitle = "";
+            let loggedUser = "";
+
             $.ajax({
                 method: 'GET',
-                url: "https://api.themoviedb.org/3/search/multi?api_key="+apiKey+"&language=en-US&query="+title+"&page=1&include_adult=false" ,
+                url: "" ,
                 data: { 
-                    searchMovieId: "hello", 
-                    searchMovieTitle: "hello2",
-                    searchMoviePoster_Path: "hello2",
-                    searchMovieBackdrop_Path: "hello2",
+                    searchMovieId: movieId, 
+                    searchMovieTitle: movTitle,
+                    searchMoviePoster_Path: movPosPath,
+                    searchMovieBackdrop_Path: movBackPath,
                     searchMovieOverview: "hello2",
-                    loggedInUser: "hello2",
+                    loggedInUser: loggedUser,
                 } ,
-                success: titleSuccess,
-                error: titleError
+                success: sendMovieSuccess,
+                error: sendMovieError
             
             });
 
+            function sendMovieSuccess(){
 
-        })
+            }
 
+            function sendMovieError(){
+                
+            }
+        });
 
 
 });
