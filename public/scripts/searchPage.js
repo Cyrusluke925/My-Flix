@@ -1,7 +1,7 @@
 $(document).ready(()=> {
 
-
 checkForLogin();
+ 
 
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
@@ -162,21 +162,22 @@ function loadPage() {
 
                                             for (var i = 0; i < 5; i += 1) {
                                                 var person = credits.crew[i];
-                                                if(person.profile_path !==null) {
+                                                if(person !== undefined) {
                                                     $('.crew').append(`<article class='person'><img src="https://image.tmdb.org/t/p/w200${person.profile_path}">
                                                 <h4 class="actorName">${person.name}</h4>
                                                 <p class='character'>${person.department}</p>`)
 
+                                                
                                                 }
-                                             
 
                                             }
-
-
+                                          
+                                            console.log('helloooo')
                                         $.ajax({
                                             method: "GET",
                                             url: `https://api.themoviedb.org/3/tv/${tvShow.id}/videos?api_key=${apiKey}&language=en-US`,
                                             success: function(vid) {
+                                                console.log(vid)
                                                 if (vid.results.length > 0) {
                                                     let vidKey = vid.results[0].key
                                                     $('#video').after(`<a id="trailer" data-id=${vid.results[0].key} style='margin-left: 100px'><i class="fab fa-youtube"></i></a>`)
@@ -202,7 +203,7 @@ function loadPage() {
                                 
                                 
                             function appendfunc(){
-                                
+                                // console.log(media)
                              $('body').css('background-color',  '#e0e3e7')
                             $('.mediaList').append(`
                                 <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
@@ -217,7 +218,7 @@ function loadPage() {
                                 
 
                                 <article class="symbols">
-                                <a href="#" class=like><i class="far fa-heart"></i></a>
+                                <a href="#" data-id=${media.id} class=like><i class="far fa-heart"></i></a>
                                 <a href="#" class="info" data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                                 </article>
                                 
@@ -228,9 +229,37 @@ function loadPage() {
                                 
 
                                 </article>
-                                </section>`
+                                </section>`)
+                            
+                                
+                                $('.like').on('click', function(e) {
+                                    console.log(theUserName)
+                                    let movieData = {
+                                        movieId: media.id,
+                                        title: media.name,
+                                        poster_path: media.poster_path,
+                                        backdrop_path: media.backdrop_path,
+                                        overview: media.overview,
+                                        userName: {theUserName,
+                                                    theUserId
+                                                    }
+                                        
+                                    }
+                                    $.ajax ({
+                                        method: 'POST',
+                                        url: '/api/flix',
+                                        data: movieData,
+                                        success: function() {
+                                            console.log('success')
+                                        }
+                                        
+                                    })
+                                })
+                            
+                            };
 
-                            )};
+
+
                         };
                         // END OF TV SECTION;
 
@@ -243,7 +272,7 @@ function loadPage() {
 
             function findGenres(input){
                         if(input === undefined) {
-                            return console.log('no value')
+                            // return console.log('no value')
                         }
                         let genresArr = [];
                         for(let v = 0; v < input.length; v++){
@@ -262,7 +291,7 @@ function loadPage() {
 
     function findGenres(input){
         if(input === undefined) {
-            return console.log('no value')
+            // return console.log('no value')
         }
         let genresArr = [];
         for(let v = 0; v < input.length; v++){
@@ -303,46 +332,43 @@ function loadPage() {
 
 
         $('.logout').on('click', e=>{
-            console.log("Clicked");
+            // console.log("Clicked");
             e.preventDefault();
             localStorage.clear();
             window.location = "http://localhost:3000/login";
             
         });
+
+
+
+
+
     
 
 });
 
 
 function checkForLogin(){
-  if(localStorage.length > 0){
+    if(localStorage.length > 0){
+  
+      let jwt = localStorage.token
+      $.ajax({
+        type: "POST",
+        url: '/verify',  
+        beforeSend: function (xhr) {   
+            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
+        }
 
-    let jwt = localStorage.token
-    $.ajax({
-      type: "POST",
-      url: '/verify',  
-      beforeSend: function (xhr) {   
-          xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
-      }
-
-    }).done(function (response) {
-      console.log("success")
-      console.log(response)
-      user = { username: response.username }
-      console.log("you can access variable user: " , user)
-      let p = `<p hidden id="currentUser">${response.username}</p>`
-      $(p).appendTo('h1');
-        //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
-    }).fail(function (err) {
-        console.log("FAIL")
-        console.log(err);
-        sleep(500).then(() => {
-            window.location = "http://localhost:3000/login";
-            
-          })
-    });
+      }).done(function (response) {
+        console.log(response)
+        user = { username: response.username, _id: response._id }
+        console.log("you can access variable user: " , user)
+ 
+      }).fail(function (err) {
+          console.log(err);
+      });
+    }
   }
-}
 
 function sleep (time) {
 return new Promise((resolve) => setTimeout(resolve, time));

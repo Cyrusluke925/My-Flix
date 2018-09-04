@@ -67,7 +67,17 @@ app.get('/api/users', function getAllUsers(req, res) {
 })
 
 
-app.get('/')
+
+app.get('/api/likes', function findLikes(req, res) {
+    db.Like.find({}, (err, allLikes) => {
+        if(err) {
+            console.log(er)
+        }
+        res.json(allLikes)
+    })
+})
+
+
 
 
 app.get('/api/flix', (req, res) => {
@@ -106,12 +116,25 @@ app.get("/favList/:username", (req, res) =>{
 
 
 
+app.post('/api/likes', (err, res) => {
+    
+
+})
+
+
+
+
+
+
+
+
+
 app.post('/signup', (req,res)=>{
-    console.log("Signup Called")
+    // console.log("Signup Called")
     var username = req.body.userName;
     var password = req.body.password;
-    console.log("Username: "+username);
-    console.log("Password: "+password);
+    // console.log("Username: "+username);
+    // console.log("Password: "+password);
 
 
     db.User.find({userName: username}, (err, users) => {
@@ -120,11 +143,12 @@ app.post('/signup', (req,res)=>{
         if (users.length >= 1) {
             return res.status(401).json({message: 'Username already used please try again'})
         }else{
+            console.log('creating user')
             bcrypt.hash(req.body.password, salt, (err, hash) => {
                 if(err){ 
-                  console.log("hashing error:", err);
-                  
-                  res.status(200).json({error: err})
+                console.log("hashing error:", err);
+                
+                res.status(200).json({error: err})
                 // we now have a successful hashed password
                 } else {
 
@@ -134,14 +158,14 @@ app.post('/signup', (req,res)=>{
                         //password: hash
                         password: hash
                     }
-                    console.log("Signup User: "+username);
-                    console.log("Signup Hash: "+hash);
+                    // console.log("Signup User: "+username);
+                    // console.log("Signup Hash: "+hash);
 
                     db.User.create( userToCreate ,(err, users) => {
                         if(err){console.log(err);}
-
+                        let uid = users._id
                         jwt.sign(
-                            { username },
+                            { username: username, _id: uid },
                             "vampires",
                             {
                                 expiresIn: "1h"
@@ -149,9 +173,12 @@ app.post('/signup', (req,res)=>{
                             (err, signedJwt) => {
                                 if(err){console.log(err);}
                                 console.log(signedJwt);
+                                let uid =  users._id;
+                                console.log("USER ID WE ARE LOOKING FOR: "+uid)
                                 res.status(200).json({
                                     message: 'User Created',
                                     username,
+                                    uid,
                                     signedJwt
                             })
 
@@ -197,6 +224,7 @@ app.post('/login', (req, res) => {
                         },
                         (err, signedJwt) => {
                             if(err){console.log(err);}
+                            console.log("userid AFTER LOG IN: "+users._id)
                             console.log(signedJwt);
                             res.status(200).json({
                                 message: 'User Created',
@@ -270,5 +298,3 @@ app.listen(process.env.PORT || 3000, () => {
     console.log('Express server is up and running on http://localhost:3000/');
   });
   
-
-

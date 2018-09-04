@@ -20,88 +20,111 @@ var db = require('./models');
 //         year: "2001"
 //     }];
 
-//     var user_list = [
-//         {
-//             userName: "masterluke",
-//             password: "hello"
-//         }
-//     ]
-
-
-//     db.User.deleteMany({}, (err, allUsers) => {
-        
-//         if(err) {return console.log(err)}
-        
-        
-//     })
-
-
-//     db.User.create(user_list, (err, allUsers) => {
-//         if(err) {return console.log(err)}
-//         return console.log(allUsers)
-//     })
-
-
-
-
-
-
-
-
-//     db.Flix.deleteMany( {}, (err, everythingRemoved) => {
-//         if(err) { return console.log(err) }
-//         console.log("all gone: ", everythingRemoved);
-//         // when we know we have no more objects, then create new objects
-//         createFlix();
-//     });
-
-
-
-
-//     let createFlix = function(){
-//         db.Flix.create(flix_list, (err, allFlix) => {
-//         if(err) { return console.log(err) }
-//         retrieveFlix();    
-//     })
-//     }
-    
-//     let retrieveFlix = function( ){
-//         db.Flix.find( {} ,(err, allFlix) => {
-//             if(err) { return console.log(err) }
-//             console.log("TOTAL flix: ", allFlix.length)
-//             console.log("all flix: ", allFlix);
-//             process.exit();
-//         });
-//     }
-    
-
-
-
-let user = {
-    userName: "bill",
-    password: "Im a hashed password"
-}
-
-db.User.create(user, (err, succ) => {
-    //console.log("User created", succ)
-    let movie = {
+    const show = {
         movieId: 4,
-        title: "Land Before Time II",
-        poster_path: "POSTer PATH",
-        backdrop_path: "Backdrop Path",
-        overview: "Dinosaurs look for more leaves",
-        userName: succ
+        title: 'Sharp Objects',
+        poster_path: 'sjsdlfjsdl;kfjs;oiefje',
+        backdrop_path: 'as;dkfjsekf',
+        overview: 'A reporter revisits her hometown and faces her psychological demons while covering a story on two dead girls',
+        
     }
-    db.Flix.create(movie, (err, movie) => {
-        db.Flix.findById(movie._id)
-            .populate('userName')
-            .exec((err, populatedUser) => {
-                console.log(populatedUser)
-                process.exit(0);
+
+    // var user_list = [
+    //     {
+    //         userName: "masterluke",
+    //         password: "hello"
+    //     }
+    // ]
+
+    const user_list = {
+        userName: 'lukeluke',
+        password: 'hello'
+    }
+
+
+
+
+  
+
+    // db.User.deleteMany({}, (err, allUsers) => {
+        
+    //     if(err) {return console.log(err)}
+    //     db.User.create(user_list, (err, allUsers) => {
+    //         if(err) {return console.log(err)}
+    //         return console.log(allUsers)
+    //     })
+    //     db.Flix.deleteMany( {}, (err, everythingRemoved) => {
+    //         if(err) { return console.log(err) }
+    //         console.log("all gone: ", everythingRemoved);
+    //         // when we know we have no more objects, then create new objects
+    //         // createFlix();
+    //         db.Flix.create(flix, (err, newFlix) => {
+    //             if(err) {
+    //                 console.log(err)
+    //              }
+    //              console.log(newFlix);
+    //         })
+    //     });
+        
+        
+    // });
+
+
+   
+
+
+
+db.Flix.deleteMany({}, (err, deletedShows) => {
+    db.User.deleteMany({}, (err, deletedUser) => {
+        db.Like.deleteMany({}, (err, deletedLikes) => {
+            
+            db.Flix.create(show, (err, savedShow) => {
+                if(err) {console.log(err);}
+                    db.User.create(user_list, (err, savedUser) => {
+                        if(err){console.log(err)};
+                        console.log("SHOW: ", savedShow)
+                        console.log("USER: ", savedUser);
+                        db.Like.create({_flix: savedShow._id, _user: savedUser._id}, (err, savedLike) => {
+                            if(err){return console.log(err)}
+                            console.log("NEW LIKE: ", savedLike)
+                        })
+                })
             })
 
+        })
     })
-
-    db.Flix.find({userName: user._id})
-
 })
+
+
+
+// db.Flix.create(show, (err, savedShow) => {
+//     if(err) {console.log(err);}
+//     db.User.create(user_list, (err, savedUser) => {
+//         if(err) {console.log(err);}
+//         db.Like.create({_flix:savedShow._id, _user: savedUser._id}, (err, succ) => {
+//             console.log(savedShow._id)
+//             console.log(succ);
+//         })
+//     })
+// })
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+       
+
+
+
+    //    ß
+    
+    
+   
