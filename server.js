@@ -214,17 +214,17 @@ app.post('/login', (req, res) => {
                 console.log("hashing error:", err); 
                 return res.status(401).json({message: 'Username/Password incorrect'})
             }else{
+                let uid = users[0]._id
                 if(hash){
                     console.log("username: ",username)
                     jwt.sign(
-                        { username },
+                        { username: username,  _id: uid  },
                         "vampires",
                         {
                             expiresIn: "1h"
                         },
                         (err, signedJwt) => {
                             if(err){console.log(err);}
-                            console.log("userid AFTER LOG IN: "+users._id)
                             console.log(signedJwt);
                             res.status(200).json({
                                 message: 'User Created',
