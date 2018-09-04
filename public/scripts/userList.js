@@ -6,9 +6,11 @@ $.ajax({
 
 })
 
+
 function appendUsers(e) {
+    console.log(e)
     e.forEach (function(user) {
-        $('body').append(`<div><a data-id="${user._id} href="#">${user.userName}</a><div>`)
+        $('.userList').append(`<a class="user" href="#" data-id="${user._id}">${user.userName}</a>`)
     })
 }
 

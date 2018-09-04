@@ -1,9 +1,7 @@
 $(document).ready(()=> {
 
-let userSignedIn;
-
-
-$('.userAppended').append(`<p class=userName>${userSignedIn}</p>`)
+checkForLogin();
+ 
 
 const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
 const api_endpoint = 'https://api.themoviedb.org/3/authentication/token/new?api_key=';
@@ -234,24 +232,28 @@ function loadPage() {
                                 </section>`)
                             
                                 checkForLogin()
-                                $('.like').on('click', function(item) {
-                                    console.log($(this).attr('data-id'));
-                                    console.log(media)
-                                    console.log(userSignedIn)
-                                    $.ajax({
-                                        method: POST,
+                                
+                                $('.like').on('click', function(e) {
+                                    console.log(theUserName)
+                                    let movieData = {
+                                        movieId: media.id,
+                                        title: media.name,
+                                        poster_path: media.poster_path,
+                                        backdrop_path: media.backdrop_path,
+                                        overview: media.overview,
+                                        userName: {theUserName,
+                                                    theUserId
+                                                    }
+                                        
+                                    }
+                                    $.ajax ({
+                                        method: 'POST',
                                         url: '/api/flix',
-                                        // data: {
-                                        //     movieId: media.id,
-                                        //     title: media.name,
-                                        //     poster_path: media.poster_path,
-                                        //     backdrop_path: media.backdrop_path,
-                                        //     overview: media.overview,
-                                        //     username: 
-                                        // },
-                                        success: function onSuccess() {
+                                        data: movieData,
+                                        success: function() {
                                             console.log('success')
                                         }
+                                        
                                     })
                                 })
                             
@@ -339,6 +341,11 @@ function loadPage() {
         });
 
 
+
+
+
+    
+
 });
 
 
@@ -357,9 +364,11 @@ function checkForLogin(){
     //   console.log("success")
     //   console.log(response)
       user = { username: response.username }
-      userSignedIn = user;
+      //userSignedIn = user;
       console.log("you can access variable user: " , user)
-      let p = `<p hidden id="currentUser">${response.username}</p>`
+      let p = `<p hidden id="currentUser">${response.username} and ${response._id}</p>`
+      theUserName = response.username;
+      theUserId = response._id;
       $(p).appendTo('h1');
         //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
     }).fail(function (err) {

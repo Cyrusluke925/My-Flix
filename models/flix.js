@@ -10,11 +10,15 @@ var flixSchema = new Schema ({
     poster_path: String,
     backdrop_path: String,
     overview: String,
-    userName: String,
+    userName: String
 })
 
 
 
+
+
+
 const Flix = mongoose.model('Flix', flixSchema);
+
 
 module.exports = Flix;
