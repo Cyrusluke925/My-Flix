@@ -92,6 +92,23 @@ app.get('/api/flix', (req, res) => {
 
 
 
+app.get("/favList/:username", (req, res) =>{
+    let username = req.params.username;
+    
+    
+    //let id = userId(usernam);
+    
+    db.User.find({userName: username}, (err, userFound) => {
+        if(err){
+            res.status(401);
+        }
+        console.log("user found: ",userFound[0]._id)
+        db.Flix.find({userName: userFound[0]._id}, (err, allUserMovies) =>{
+            if(err){console.log(err);}
+            res.json(allUserMovies)
+        })
+    });
+});
 
 
 
@@ -203,19 +220,15 @@ app.post('/login', (req, res) => {
             return res.status(401).json({message: 'Username/Password incorrect'})
         }
         console.log("users found: "+users);
-
-        // if(bcrypt.compare(password, users[0].password, (err, hash) => {
-        //     //console.log("Got to Hasing");
-
-        //     if(err){ 
-        //         console.log("hashing error:", err); 
-        //         return res.status(401).json({message: 'Username/Password incorrect'})
-        //     }
-        // })){
-
-        if(password === users[0].password){
-                //console.log("coming in: "+hash);
-                //console.log("found pass: "+users[0].password);
+        let passCheck = bcrypt.compare(password, users[0].password, (err, hash) => {
+            console.log("Got to Hasing");
+            console.log(hash);
+            if(err){ 
+                console.log("hashing error:", err); 
+                return res.status(401).json({message: 'Username/Password incorrect'})
+            }else{
+                if(hash){
+                    console.log("username: ",username)
                     jwt.sign(
                         { username },
                         "vampires",
@@ -224,6 +237,7 @@ app.post('/login', (req, res) => {
                         },
                         (err, signedJwt) => {
                             if(err){console.log(err);}
+                            console.log("userid AFTER LOG IN: "+users._id)
                             console.log(signedJwt);
                             res.status(200).json({
                                 message: 'User Created',
@@ -231,17 +245,14 @@ app.post('/login', (req, res) => {
                                 signedJwt,
                                 
                             })
-
                         });
-            
-        }else{
-            return res.status(401).json({message: 'Username/Password incorrect'})
-        }
-
+                }else{
+                    return res.status(401).json({message: 'Username/Password incorrect'})
+                }
+            }
+        });
     })
 });
-        
-
 
 
     app.post('/verify', verifyToken, (req, res) => {
@@ -277,6 +288,26 @@ app.post('/login', (req, res) => {
 	  
 
 
+
+
+
+function signJwt(){
+    jwt.sign(
+        { username },
+        "vampires",
+        {
+            expiresIn: "1h"
+        },
+        (err, signedJwt) => {
+            if(err){console.log(err);}
+            console.log(signedJwt);
+            res.status(200).json({
+                message: 'User Created',
+                username,
+                signedJwt
+            })
+        });
+}
 
 
 app.listen(process.env.PORT || 3000, () => {

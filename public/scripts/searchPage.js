@@ -231,7 +231,6 @@ function loadPage() {
                                 </article>
                                 </section>`)
                             
-                               
                                 
                                 $('.like').on('click', function(e) {
                                     console.log(theUserId)
@@ -361,7 +360,7 @@ function checkForLogin(){
         console.log(response)
         user = { username: response.username, _id: response._id }
         console.log("you can access variable user: " , user)
-
+ 
       }).fail(function (err) {
           console.log(err);
       });

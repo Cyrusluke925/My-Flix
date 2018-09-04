@@ -27,7 +27,7 @@ $( document ).ready(function() {
         let p = `<p style="color:green; margin-top:0px;">Account created sucessfully, redirecting...</p>`
         $('.signUpErrors').empty().append(p);
         sleep(2000).then(() => {
-            window.location = "http://localhost:3000/login";
+            window.location = "http://localhost:3000/search";
             console.log(json)
         })
     }

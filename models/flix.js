@@ -10,7 +10,6 @@ var flixSchema = new Schema ({
     poster_path: String,
     backdrop_path: String,
     overview: String,
-    userName: String
 })
 
 
