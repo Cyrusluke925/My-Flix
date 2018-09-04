@@ -99,10 +99,22 @@ app.get('/api/flix', (req, res) => {
 
 
 
-app.post('/api/likes', (err, res) => {
-    
+app.post('/api/likes', (req, res) => {
+    let media = req.body;
+    console.log(media)
+    db.Flix.create({movieId: media.movieId, title: media.name, poster_path: media.poster_path, backdrop_path: media.backdrop_path, overview: media.overview}, (err, savedFlix) => {
+        if(err){console.log(err);}
+        db.User.findById({_id: media.theUserId}, (err, savedUser) => {
+            console.log(savedUser)
+            // if (err){console.log(err);}
+            // db.Like.create({_flix: savedFlix._id, _user: savedUser._id}, (err, savedLike) => {
+            //     if(err){console.log(err);}
+            //     console.log(savedLike);
+            })
+        })
+    })
 
-})
+// })
 
 
 
@@ -139,16 +151,16 @@ app.post('/signup', (req,res)=>{
                         userName: username,
                         //commenting out hashed pass saving as text
                         //password: hash
-                        password: password
+                        password: hash
                     }
                     // console.log("Signup User: "+username);
                     // console.log("Signup Hash: "+hash);
 
                     db.User.create( userToCreate ,(err, users) => {
                         if(err){console.log(err);}
-
+                        let uid = users._id
                         jwt.sign(
-                            { username },
+                            { username: username, _id: uid },
                             "vampires",
                             {
                                 expiresIn: "1h"
@@ -156,9 +168,12 @@ app.post('/signup', (req,res)=>{
                             (err, signedJwt) => {
                                 if(err){console.log(err);}
                                 console.log(signedJwt);
+                                let uid =  users._id;
+                                console.log("USER ID WE ARE LOOKING FOR: "+uid)
                                 res.status(200).json({
                                     message: 'User Created',
                                     username,
+                                    uid,
                                     signedJwt
                             })
 
@@ -169,6 +184,7 @@ app.post('/signup', (req,res)=>{
         }
     });
 });
+
 
 
 
@@ -212,7 +228,8 @@ app.post('/login', (req, res) => {
                             res.status(200).json({
                                 message: 'User Created',
                                 username,
-                                signedJwt
+                                signedJwt,
+                                
                             })
 
                         });
@@ -230,12 +247,13 @@ app.post('/login', (req, res) => {
     app.post('/verify', verifyToken, (req, res) => {
         let verified= jwt.verify(req.token, 'vampires')
         console.log("verified: ", verified)
-        res.json(verified)
+        
+        res.json()
     })
 
 
 
-      function verifyToken(req, res, next) {
+    function verifyToken(req, res, next) {
         console.log("in verify...");
         // Get auth header value
         // when we send our token, we want to send it in our header
@@ -256,6 +274,7 @@ app.post('/login', (req, res) => {
           res.sendStatus(403);
         }
       }
+	  
 
 
 

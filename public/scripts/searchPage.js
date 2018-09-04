@@ -231,9 +231,10 @@ function loadPage() {
                                 </article>
                                 </section>`)
                             
-                                checkForLogin()
+                               
                                 
                                 $('.like').on('click', function(e) {
+                                    console.log(theUserId)
                                     console.log(theUserName)
                                     let movieData = {
                                         movieId: media.id,
@@ -241,14 +242,11 @@ function loadPage() {
                                         poster_path: media.poster_path,
                                         backdrop_path: media.backdrop_path,
                                         overview: media.overview,
-                                        userName: {theUserName,
-                                                    theUserId
-                                                    }
-                                        
+                                        userId: theUserId
                                     }
                                     $.ajax ({
                                         method: 'POST',
-                                        url: '/api/flix',
+                                        url: '/api/likes',
                                         data: movieData,
                                         success: function() {
                                             console.log('success')
@@ -262,7 +260,7 @@ function loadPage() {
 
 
                         };
-                        // END OF TV SECTION;
+                        
 
     
 
@@ -348,39 +346,27 @@ function loadPage() {
 
 });
 
-
 function checkForLogin(){
-  if(localStorage.length > 0){
+    if(localStorage.length > 0){
+  
+      let jwt = localStorage.token
+      $.ajax({
+        type: "POST",
+        url: '/verify',  
+        beforeSend: function (xhr) {   
+            xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
+        }
 
-    let jwt = localStorage.token
-    $.ajax({
-      type: "POST",
-      url: '/verify',  
-      beforeSend: function (xhr) {   
-          xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
-      }
+      }).done(function (response) {
+        console.log(response)
+        user = { username: response.username, _id: response._id }
+        console.log("you can access variable user: " , user)
 
-    }).done(function (response) {
-    //   console.log("success")
-    //   console.log(response)
-      user = { username: response.username }
-      //userSignedIn = user;
-      console.log("you can access variable user: " , user)
-      let p = `<p hidden id="currentUser">${response.username} and ${response._id}</p>`
-      theUserName = response.username;
-      theUserId = response._id;
-      $(p).appendTo('h1');
-        //$('#message').text(`Welcome, ${ response.username || response.result.username } `);
-    }).fail(function (err) {
-        // console.log("FAIL")
-        // console.log(err);
-        sleep(500).then(() => {
-            window.location = "http://localhost:3000/login";
-            
-          })
-    });
+      }).fail(function (err) {
+          console.log(err);
+      });
+    }
   }
-}
 
 function sleep (time) {
 return new Promise((resolve) => setTimeout(resolve, time));
