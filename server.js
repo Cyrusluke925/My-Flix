@@ -102,7 +102,7 @@ app.get("/favList/:username", (req, res) =>{
         if(err){
             res.status(401);
         }
-        console.log("user found: ",userFound[0]._id)
+        // console.log("user found: ",userFound[0]._id)
         db.Flix.find({userName: userFound[0]._id}, (err, allUserMovies) =>{
             if(err){console.log(err);}
             res.json(allUserMovies)
@@ -121,17 +121,17 @@ app.post('/api/likes', (req, res) => {
     console.log(media)
     db.Flix.create({movieId: media.movieId, title: media.name, poster_path: media.poster_path, backdrop_path: media.backdrop_path, overview: media.overview}, (err, savedFlix) => {
         if(err){console.log(err);}
-        db.User.findById({_id: media.theUserId}, (err, savedUser) => {
-            console.log(savedUser)
-            // if (err){console.log(err);}
-            // db.Like.create({_flix: savedFlix._id, _user: savedUser._id}, (err, savedLike) => {
-            //     if(err){console.log(err);}
-            //     console.log(savedLike);
+        db.User.findById({_id: media.userId}, (err, savedUser) => {
+            
+            if (err){console.log(err);}
+            db.Like.create({_flix: savedFlix._id, _user: savedUser._id}, (err, savedLike) => {
+                if(err){console.log(err);}
+                console.log(savedLike);
             })
         })
     })
 
-// })
+})
 
 
 
@@ -219,10 +219,10 @@ app.post('/login', (req, res) => {
         }else if (users.length < 1) {
             return res.status(401).json({message: 'Username/Password incorrect'})
         }
-        console.log("users found: "+users);
+        // console.log("users found: "+users);
         let passCheck = bcrypt.compare(password, users[0].password, (err, hash) => {
             console.log("Got to Hasing");
-            console.log(hash);
+            // console.log(hash);
             if(err){ 
                 console.log("hashing error:", err); 
                 return res.status(401).json({message: 'Username/Password incorrect'})
@@ -258,8 +258,7 @@ app.post('/login', (req, res) => {
     app.post('/verify', verifyToken, (req, res) => {
         let verified= jwt.verify(req.token, 'vampires')
         console.log("verified: ", verified)
-        
-        res.json()
+        res.json(verified)
     })
 
 

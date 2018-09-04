@@ -233,15 +233,15 @@ function loadPage() {
                             
                                 
                                 $('.like').on('click', function(e) {
-                                    console.log(theUserId)
-                                    console.log(theUserName)
+                                  console.log(user._id)
+                                    // console.log(userId)
                                     let movieData = {
                                         movieId: media.id,
                                         title: media.name,
                                         poster_path: media.poster_path,
                                         backdrop_path: media.backdrop_path,
                                         overview: media.overview,
-                                        userId: theUserId
+                                        userId: user._id
                                     }
                                     $.ajax ({
                                         method: 'POST',
@@ -349,6 +349,7 @@ function checkForLogin(){
     if(localStorage.length > 0){
   
       let jwt = localStorage.token
+      console.log(jwt);
       $.ajax({
         type: "POST",
         url: '/verify',  
@@ -357,12 +358,14 @@ function checkForLogin(){
         }
 
       }).done(function (response) {
-        console.log(response)
+        // console.log(response)
+        
         user = { username: response.username, _id: response._id }
+        console.log(user._id);
         console.log("you can access variable user: " , user)
- 
-      }).fail(function (err) {
-          console.log(err);
+        
+      }).fail(function (e1,e2,e3) {
+          console.log(e2);
       });
     }
   }
