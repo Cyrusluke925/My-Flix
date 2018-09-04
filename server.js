@@ -142,6 +142,14 @@ app.delete('api/likes', (req, res) => {
 
 
 
+app.get('/api/likes', (req, res) => {
+    let user = req.body
+    console.log('helloooooo')
+    console.log(user)
+})
+
+
+
 app.post('/api/likes', (req, res) => {
     let media = req.body;
     console.log(media)
@@ -158,12 +166,6 @@ app.post('/api/likes', (req, res) => {
     })
 
 })
-
-
-
-
-
-
 
 
 

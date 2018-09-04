@@ -16,6 +16,24 @@ function appendUsers(e) {
 
 
 
+$('.userList').on('click', '.user', function(user) {
+    let userId = $(this).attr('data-id')
+    $.ajax({
+        method: 'GET',
+        url: '/api/likes',
+        data: userId,
+        success: function onSuccess(res) {
+            console.log('success')
+            console.log(res);
+        },
+        error: function onError(err){
+            console.log(err);
+        }
+    })
+})
+
+
+
 
 
 

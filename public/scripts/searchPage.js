@@ -63,6 +63,7 @@ function loadPage() {
 
                 response.results.forEach(function(media) {
                     let currentGenres = findGenres(media.genre_ids);
+                    // console.log('THIS IS THE CURRENT GENRES!!!!! ', currentGenres)
                   
 
                     if(media.media_type === "tv") {
@@ -232,41 +233,49 @@ function loadPage() {
                                 </section>`)
                             
                                 
-                                $('.like').on('click', function(e) {
-                                  console.log(user._id)
-                                    // console.log(userId)
-                                    let movieData = {
-                                        movieId: media.id,
-                                        title: media.name,
-                                        poster_path: media.poster_path,
-                                        backdrop_path: media.backdrop_path,
-                                        overview: media.overview,
-                                        userId: user._id
-                                    }
-                                    $.ajax ({
-                                        method: 'POST',
-                                        url: '/api/likes',
-                                        data: movieData,
-                                        success: function() {
-                                            console.log('success')
-                                        }
-                                        
-                                    })
-                                })
+                                
                             
                             };
 
 
 
                         };
-                        
-
-    
+            });
 
 
-        
-                                
-        });
+
+            $('.like').on('click', function(e) {
+                var tvId = $(this).attr('data-id');
+                console.log(user._id)
+                $.ajax({
+                    method: 'GET',
+                    url:`https://api.themoviedb.org/3/tv/${tvId}?api_key=${apiKey}`,
+                    success: function sendToLikes(media) {
+                        let movieData = {
+                            movieId: media.id,
+                            title: media.name,
+                            poster_path: media.poster_path,
+                            backdrop_path: media.backdrop_path,
+                            overview: media.overview,
+                            userId: user._id
+                        }
+                        $.ajax({
+                            method: "POST",
+                            url: '/api/likes',
+                            data: movieData,
+                            success: function success() {
+                                console.log('success')
+                            }
+                        })
+                    }
+                })
+             
+            })
+
+
+            
+               
+            
 
             function findGenres(input){
                         if(input === undefined) {
