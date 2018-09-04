@@ -103,9 +103,11 @@ app.get("/favList/:username", (req, res) =>{
             res.status(401);
         }
         console.log("user found: ",userFound[0]._id)
-        db.Flix.find({userName: userFound[0]._id}, (err, allUserMovies) =>{
-            if(err){console.log(err);}
-            res.json(allUserMovies)
+        db.Like.find({_user: userFound[0]._id}, (err, allLikesFound)=>{
+            db.Flix.find({_id: allLikesFound[0]._id}, (err, allUserMovies) =>{
+                if(err){console.log(err);}
+                res.json(allUserMovies)
+            })
         })
     });
 });
