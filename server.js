@@ -128,6 +128,15 @@ app.get("/favList/:username", (req, res) =>{
 });
 
 
+app.delete('api/likes', (req, res) => {
+    let uid = req.body;
+    let flixId = req.body;
+
+    db.Like.deleteOne({_flix: flixId, _user: uid}, (err, deletedLike)=>{
+        if(err){console.log(err);}
+        res.json(deletedLike);
+    })
+})
 
 
 
