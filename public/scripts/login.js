@@ -30,6 +30,7 @@ $( document ).ready(function() {
 
 
     checkForLogin()
+    
     function checkForLogin(){
       if(localStorage.length > 0){
     

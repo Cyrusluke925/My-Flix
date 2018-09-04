@@ -94,22 +94,37 @@ app.get('/api/flix', (req, res) => {
 
 app.get("/favList/:username", (req, res) =>{
     let username = req.params.username;
+    //let jsonToReturn = [];
     
-    
-    //let id = userId(usernam);
     
     db.User.find({userName: username}, (err, userFound) => {
         if(err){
             res.status(401);
         }
-        console.log("user found: ",userFound[0]._id)
-        db.Like.find({_user: userFound[0]._id}, (err, allLikesFound)=>{
-            db.Flix.find({_id: allLikesFound[0]._id}, (err, allUserMovies) =>{
-                if(err){console.log(err);}
-                res.json(allUserMovies)
+        
+        let uid = userFound[0]._id;
+        console.log("user found: ", uid)
+        db.Like.find({_user: uid})
+            .populate('_flix')
+            .exec( (err, succ) => {
+                res.json(succ);
             })
-        })
-    });
+        
+        // =>{
+        //     console.log("ALL LIKES FOUND: ", allLikesFound)
+        //     allLikesFound.forEach( function(like){
+        //         db.Flix.findById({_id : like._flix}, (err, flix)=> {
+        //             jsonToReturn.push(flix);
+        //         })
+        //      })
+             
+        //     //console.log('ARRAY JSON',jsonToReturn)
+        //     // res.json(jsonToReturn);
+        //     // res.json(allLikesFound)
+        // })
+    })
+    
+    
 });
 
 
@@ -118,8 +133,20 @@ app.get("/favList/:username", (req, res) =>{
 
 
 
-app.post('/api/likes', (err, res) => {
-    
+app.post('/api/likes', (req, res) => {
+    let media = req.body;
+    console.log(media)
+    db.Flix.create({movieId: media.movieId, title: media.name, poster_path: media.poster_path, backdrop_path: media.backdrop_path, overview: media.overview}, (err, savedFlix) => {
+        if(err){console.log(err);}
+        db.User.findById({_id: media.userId}, (err, savedUser) => {
+            
+            if (err){console.log(err);}
+            db.Like.create({_flix: savedFlix._id, _user: savedUser._id}, (err, savedLike) => {
+                if(err){console.log(err);}
+                console.log(savedLike);
+            })
+        })
+    })
 
 })
 
@@ -194,6 +221,7 @@ app.post('/signup', (req,res)=>{
 
 
 
+
 app.post('/login', (req, res) => {
     console.log("LOGIN CALLED");
     var username = req.body.userName;
@@ -208,10 +236,10 @@ app.post('/login', (req, res) => {
         }else if (users.length < 1) {
             return res.status(401).json({message: 'Username/Password incorrect'})
         }
-        console.log("users found: "+users);
+        // console.log("users found: "+users);
         let passCheck = bcrypt.compare(password, users[0].password, (err, hash) => {
             console.log("Got to Hasing");
-            console.log(hash);
+            // console.log(hash);
             if(err){ 
                 console.log("hashing error:", err); 
                 return res.status(401).json({message: 'Username/Password incorrect'})
@@ -231,7 +259,8 @@ app.post('/login', (req, res) => {
                             res.status(200).json({
                                 message: 'User Created',
                                 username,
-                                signedJwt
+                                signedJwt,
+                                
                             })
                         });
                 }else{
@@ -251,7 +280,7 @@ app.post('/login', (req, res) => {
 
 
 
-      function verifyToken(req, res, next) {
+    function verifyToken(req, res, next) {
         console.log("in verify...");
         // Get auth header value
         // when we send our token, we want to send it in our header
@@ -272,6 +301,7 @@ app.post('/login', (req, res) => {
           res.sendStatus(403);
         }
       }
+	  
 
 
 
