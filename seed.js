@@ -101,4 +101,7 @@ db.User.create(user, (err, succ) => {
             })
 
     })
+
+    db.Flix.find({userName: user._id})
+
 })

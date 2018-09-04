@@ -82,6 +82,30 @@ app.get('/api/flix', (req, res) => {
 
 
 
+app.get("/favList/:username", (req, res) =>{
+    let username = req.params.username;
+    
+    
+    //let id = userId(usernam);
+    
+    db.User.find({userName: username}, (err, userFound) => {
+        if(err){
+            res.status(401);
+        }
+        console.log("user found: ",userFound[0]._id)
+        db.Flix.find({userName: userFound[0]._id}, (err, allUserMovies) =>{
+            if(err){console.log(err);}
+            res.json(allUserMovies)
+        })
+    });
+});
+
+
+
+
+
+
+
 app.post('/signup', (req,res)=>{
     console.log("Signup Called")
     var username = req.body.userName;
@@ -218,7 +242,6 @@ app.post('/login', (req, res) => {
           res.sendStatus(403);
         }
       }
-
 
 
 
