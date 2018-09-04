@@ -101,7 +101,9 @@ app.get("/favList/:username", (req, res) =>{
         if(err){
             res.status(401);
         }
-        
+        if(userFound < 1){
+            res.status(404).json({message: "USER NOT FOUND"})
+        }else{
         let uid = userFound[0]._id;
         console.log("user found: ", uid)
         db.Like.find({_user: uid})
@@ -109,7 +111,7 @@ app.get("/favList/:username", (req, res) =>{
             .exec( (err, succ) => {
                 res.json(succ);
             })
-        
+        }
         // =>{
         //     console.log("ALL LIKES FOUND: ", allLikesFound)
         //     allLikesFound.forEach( function(like){
