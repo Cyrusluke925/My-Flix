@@ -99,7 +99,6 @@ app.get('/api/flix', (req, res) => {
 
 
 app.get("/favlist/:username", (req, res) =>{
-    console.log('HELLLOOOOO')
     let id = req.body._id;
     let username = req.params.username;
     console.log(username)
