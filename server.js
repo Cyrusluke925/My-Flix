@@ -94,8 +94,6 @@ app.get('/api/flix', (req, res) => {
 
 app.get("/favList/:username", (req, res) =>{
     let username = req.params.username;
-    //let jsonToReturn = [];
-    
     
     db.User.find({userName: username}, (err, userFound) => {
         if(err){
@@ -112,29 +110,14 @@ app.get("/favList/:username", (req, res) =>{
                 res.json(succ);
             })
         }
-        // =>{
-        //     console.log("ALL LIKES FOUND: ", allLikesFound)
-        //     allLikesFound.forEach( function(like){
-        //         db.Flix.findById({_id : like._flix}, (err, flix)=> {
-        //             jsonToReturn.push(flix);
-        //         })
-        //      })
-             
-        //     //console.log('ARRAY JSON',jsonToReturn)
-        //     // res.json(jsonToReturn);
-        //     // res.json(allLikesFound)
-        // })
     })
-    
-    
 });
 
 
 app.delete('api/likes', (req, res) => {
-    let uid = req.body;
-    let flixId = req.body;
+    let likeId = req.body;
 
-    db.Like.deleteOne({_flix: flixId, _user: uid}, (err, deletedLike)=>{
+    db.Like.deleteOne({_id: likeId}, (err, deletedLike)=>{
         if(err){console.log(err);}
         res.json(deletedLike);
     })
@@ -145,9 +128,7 @@ app.delete('api/likes', (req, res) => {
 
 
 app.get('/api/likes', (req, res) => {
-    let user = req.body
-    console.log('helloooooo')
-    console.log(user)
+
 })
 
 
