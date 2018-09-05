@@ -1,21 +1,32 @@
 $(document).ready(()=> {
     
     checkForLogin()
-    let user;
 
-    console.log(user)
-    $.ajax({
-        method: 'GET',
-        url: `favlist/${user.username}`,
-        data: data._id,
-        success: function success() {
-            console.log('success');
-        }
-       
+
+
+    $(document).on('click', "#delete",e =>{
+        e.preventDefault();
+        var id = $(e.target).data('id');
+        console.log("ID being deletes:",id);
+        $.ajax({
+            type: "DELETE",
+            url: '/api/likes',
+            data: {likedID: id},
+            success: function onSuccess(){
+                console.log("ITEM DELETED")
+                $(e.target).parent().parent().remove()
+            },
+            error: function onError(){
+                console.log("ERRORED")
+            }
+    
+          })
+
     })
 
 
- });
+
+
 
 function checkForLogin(){
     if(localStorage.length > 0){
@@ -43,12 +54,13 @@ function checkForLogin(){
                
                 
                 e.forEach(function(films){
+                    // console.log(films)
                     let media = films._flix;
                     // console.log(media)
                     console.log(media)
                     $('body').css('background-color',  '#e0e3e7')
                     $('.myList').append(`
-                        <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
+                        <section data-id:"${films._id}" class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
                         <article class="movieCover">
             
                         <img class="image" src = "https://image.tmdb.org/t/p/w300/${media.poster_path}">
@@ -69,25 +81,28 @@ function checkForLogin(){
                         <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
                         <h3 class="genre">Genre:</h3>\n<p class="paragraph"></p>
                         
-
+                        <button id="delete" data-id="${films._id}">Remove from list</button>
                         </article>
                         </section>`)
-                })
+
+                });
+
             }
            
         })
-
 
             console.log("you can access variable user: " , user)
         
             }).fail(function (e1,e2,e3) {
                 console.log(e2);
+                alert("PLEASE LOG IN AGAIN");
             });
         }
     }
+
 
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
 
-//});
+});

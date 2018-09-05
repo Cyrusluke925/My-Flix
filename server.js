@@ -99,10 +99,10 @@ app.get('/api/flix', (req, res) => {
 
 
 app.get("/favlist/:username", (req, res) =>{
-    console.log('HELLLOOOOO')
+    //console.log('HELLLOOOOO')
     let id = req.body._id;
     let username = req.params.username;
-    console.log(username)
+    //console.log(username)
     //let jsonToReturn = [];
     
     
@@ -126,8 +126,10 @@ app.get("/favlist/:username", (req, res) =>{
 });
 
 
-app.delete('api/likes', (req, res) => {
-    let likeId = req.body;
+app.delete('/api/likes', (req, res) => {
+    console.log("api hit");
+    let likeId = req.body.likedID;
+    console.log("LIKE ID: "+likeId);
 
     db.Like.deleteOne({_id: likeId}, (err, deletedLike)=>{
         if(err){console.log(err);}

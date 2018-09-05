@@ -246,7 +246,7 @@ function loadPage() {
 
             $('.like').on('click', function(e) {
                 var tvId = $(this).attr('data-id');
-                console.log(user._id)
+                //console.log(user._id)
                 $.ajax({
                     method: 'GET',
                     url:`https://api.themoviedb.org/3/tv/${tvId}?api_key=${apiKey}`,
