@@ -253,12 +253,14 @@ function loadPage() {
                     success: function sendToLikes(media) {
                         let movieData = {
                             movieId: media.id,
-                            title: media.name,
+                            name: media.name,
                             poster_path: media.poster_path,
                             backdrop_path: media.backdrop_path,
                             overview: media.overview,
                             userId: user._id
+
                         }
+
                         $.ajax({
                             method: "POST",
                             url: '/api/likes',
