@@ -46,6 +46,10 @@ app.get('/search', function homepage(req, res) {
     res.sendFile('views/searchPage.html' , { root : __dirname});
 });
 
+app.get('/mylist', function mylist(req, res) {
+    res.sendFile('views/myList.html', {root: __dirname} );
+})
+
 
 app.post('/search', (req,res) =>{
     // db.Flix.create(flixEntry ,  (err, ))
@@ -92,8 +96,13 @@ app.get('/api/flix', (req, res) => {
 
 
 
-app.get("/favList/:username", (req, res) =>{
+
+
+app.get("/favlist/:username", (req, res) =>{
+    console.log('HELLLOOOOO')
+    let id = req.body._id;
     let username = req.params.username;
+    console.log(username)
     //let jsonToReturn = [];
     
     
@@ -112,18 +121,7 @@ app.get("/favList/:username", (req, res) =>{
                 res.json(succ);
             })
         }
-        // =>{
-        //     console.log("ALL LIKES FOUND: ", allLikesFound)
-        //     allLikesFound.forEach( function(like){
-        //         db.Flix.findById({_id : like._flix}, (err, flix)=> {
-        //             jsonToReturn.push(flix);
-        //         })
-        //      })
-             
-        //     //console.log('ARRAY JSON',jsonToReturn)
-        //     // res.json(jsonToReturn);
-        //     // res.json(allLikesFound)
-        // })
+    
     })
     
     
@@ -144,19 +142,14 @@ app.delete('api/likes', (req, res) => {
 
 
 
-app.get('/api/likes', (req, res) => {
-    let user = req.body
-    console.log('helloooooo')
-    console.log(user)
-})
-
-
 
 app.post('/api/likes', (req, res) => {
     let media = req.body;
-    console.log(media)
-    db.Flix.create({movieId: media.movieId, title: media.name, poster_path: media.poster_path, backdrop_path: media.backdrop_path, overview: media.overview}, (err, savedFlix) => {
+    // console.log(req)
+    // console.log(media)
+    db.Flix.create({movieId: media.movieId, name: media.name, poster_path: media.poster_path, backdrop_path: media.backdrop_path, overview: media.overview}, (err, savedFlix) => {
         if(err){console.log(err);}
+        
         db.User.findById({_id: media.userId}, (err, savedUser) => {
             
             if (err){console.log(err);}
@@ -287,18 +280,18 @@ app.post('/login', (req, res) => {
 
     app.post('/verify', verifyToken, (req, res) => {
         let verified= jwt.verify(req.token, 'vampires')
-        console.log("verified: ", verified)
+        // console.log("verified: ", verified)
         res.json(verified)
     })
 
 
 
     function verifyToken(req, res, next) {
-        console.log("in verify...");
+        // console.log("in verify...");
         // Get auth header value
         // when we send our token, we want to send it in our header
         const bearerHeader = req.headers['authorization'];
-        console.log(bearerHeader)
+        // console.log(bearerHeader)
         // Check if bearer is undefined
         if(typeof bearerHeader !== 'undefined'){
           const bearer = bearerHeader.split(' ');
