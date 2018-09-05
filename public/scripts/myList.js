@@ -15,7 +15,7 @@ $(document).ready(()=> {
     })
 
 
-// });
+ });
 
 function checkForLogin(){
     if(localStorage.length > 0){
@@ -78,16 +78,16 @@ function checkForLogin(){
         })
 
 
-        console.log("you can access variable user: " , user)
+            console.log("you can access variable user: " , user)
         
-      }).fail(function (e1,e2,e3) {
-          console.log(e2);
-      });
+            }).fail(function (e1,e2,e3) {
+                console.log(e2);
+            });
+        }
     }
-  }
 
-function sleep (time) {
-return new Promise((resolve) => setTimeout(resolve, time));
-}
+    function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
+    }
 
-});
+//});
