@@ -1,21 +1,22 @@
 nav {
-    
     background-color: #2D2D2D;
     height: 3.5em;
     display: flex;
-    /* align-items: center; */
 }
+
+
 ul {
-    
     padding-left: 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
 
+
 li {
     list-style-type: none;
 }
+
 
 a {
     text-decoration: none;
@@ -24,6 +25,7 @@ a {
     color: #9d9d9d
 }
 
+
 h1 {
     text-align: left;
     font-family: "Nanum Gothic";
@@ -31,19 +33,18 @@ h1 {
     margin-left: 2em;
     border-bottom: 1px solid black;
     display: inline-block;
-
 }
+
 
 .navLink:hover {
     color:white;
 }
 
+
 body {
     margin-top: 0;
     background-color: #E0E3E7;
-     
 }
-
 
 
 .user {
@@ -55,42 +56,28 @@ body {
 }
 
 
-
-
-
-
-
 /* ***************************WHEN USER IS CLICKED******************** */
-
-
-
-
-
 
 section {
     margin: 5em 0;
 }
 
+
 .listing {
     display: flex;
     margin: 8em 0;
     background-size: cover;
-    background-position: center;
-    
+    background-position: center;   
 }
-
 
 
 .movieInfo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     background-color:rgba(49, 50, 55, 0.8);
     width: 100%;
 }
-
-
 
 
 p {
@@ -100,11 +87,9 @@ p {
 }
 
 
-
 i {
    font-size: 1.5em;
 }
-
 
 
 .like {
@@ -124,12 +109,12 @@ i {
 }
 
 
-
 .symbols {
     display: flex;
     justify-content: space-around;
     width: 30%;
 }
+
 
 body {
     margin: 0;
@@ -144,10 +129,12 @@ h1, p, a {
     
 }
 
+
 h2 {
     color: white;
     font-size: 38px;
 }
+
 
 h2 {
     font-family: 'source sans pro';
@@ -164,7 +151,4 @@ h3 {
     border-bottom: 1px solid white;
     font-size: 20px;
     margin-left: 25px;
-
-   
-
 }

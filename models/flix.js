@@ -1,8 +1,6 @@
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
-
-
 var flixSchema = new Schema ({
 
     movieId: Number,
@@ -12,12 +10,6 @@ var flixSchema = new Schema ({
     overview: String,
 })
 
-
-
-
-
-
 const Flix = mongoose.model('Flix', flixSchema);
-
 
 module.exports = Flix;
