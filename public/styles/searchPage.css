@@ -5,16 +5,16 @@ body {
 
 
 h1, p, a {
-
     font-family: "nanum gothic";
-    text-align: center;
-    
+    text-align: center; 
 }
+
 
 h2 {
     color: white;
     font-size: 38px;
 }
+
 
 h2 {
     font-family: 'source sans pro';
@@ -23,6 +23,7 @@ h2 {
     margin-top: 0;
 }
 
+
 nav {
     width: 100%;
     background-color: #2D2D2D;
@@ -30,17 +31,20 @@ nav {
     display: flex;
     /* align-items: center; */
 }
+
+
 ul {
-    
     padding-left: 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
 
+
 li {
     list-style-type: none;
 }
+
 
 a {
     text-decoration: none;
@@ -54,7 +58,6 @@ a:hover{
 }
 
 
-
 h3 {
     font-family: "source sans pro";
     color: white;
@@ -62,76 +65,60 @@ h3 {
     border-bottom: 1px solid white;
     font-size: 20px;
     margin-left: 25px;
-
-   
-
 }
 
 i:hover {
     color: darkred;
-    
 }
 
 form {
     margin-top: 4em;
     margin-bottom: 10em;
     height: 25vh;
-    
     display: flex;
-    /* flex-direction: column; */
-    /* justify-content: space-between; */
     align-items: center;
     justify-content: center;
 
 }
+
 
 #search {
     margin-left: 0.8em;
     margin-right: 1em;
 }
 
-/* button {
-    height: 2.5em;
-    width: 30em;
-    align-self: center;
-} */
 
 input {
     height:3em;
     width: 55em;
 }
 
+
 input::placeholder{
     font-size: 1.5em;
 }
-
-
 
 
 section {
     margin: 5em 0;
 }
 
+
 .listing {
     display: flex;
     margin: 8em 0;
     background-size: cover;
-    background-position: center;
-    
+    background-position: center; 
 }
-
 
 
 .movieInfo {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
     background-color:rgba(49, 50, 55, 0.8);
     width: 100%;
 }
-
-
 
 
 p {
@@ -141,18 +128,15 @@ p {
 }
 
 
-
 i {
    font-size: 1.5em;
 }
-
 
 
 .like {
     display: flex;
     align-items: center;
     justify-self: flex-start;
-
 }
 
 
@@ -165,7 +149,6 @@ i {
 }
 
 
-
 .symbols {
     display: flex;
     justify-content: space-around;
@@ -173,15 +156,12 @@ i {
 }
 
 
-
-
-
-
 /* *****************************DETAILED EXPANSION CSS********************************************* */
 
 .show {
     margin-top: 0;
 }
+
 
 .header {
     display: flex;
@@ -198,14 +178,17 @@ i {
     margin-bottom: 0;
 }
 
+
 .about {
     margin: 0;
 }
+
 
 .descriptionTitle {
     display: inline-block;
     font-size: 1.5em;
 }
+
 
 .descriptionText {
     color: white;
@@ -225,15 +208,14 @@ i {
 
 
 .cast {
-    
     display: flex; 
     justify-content: space-between;
     padding-top: 50px;
     padding-left: 1em;
     padding-right: 1em;
     background-color: rgba(49,50,55, 0.3);
-    
 }
+
 
 .person {
     display: flex;
@@ -241,16 +223,18 @@ i {
     align-items: center;
 }
 
+
 .actorName {
     color: white;
     margin-top: 0.5em;
     margin-bottom: 0;
 }
 
+
 .castAndCrew {
-    background-color: rgba(49,50,55, 0.8);
-    
+    background-color: rgba(49,50,55, 0.8); 
 }
+
 
 .castTitle {
     display: inline-block;
@@ -258,10 +242,8 @@ i {
     margin-top: 3em;
     margin-bottom: 0;
     margin-left: 2.5em;
-
-    
-
 }
+
 
 .whiteLine {
     color: white;
@@ -275,7 +257,6 @@ i {
     padding-right: 1em;
     background: rgba(49,50,55, 0.3);
     align-items: center;
-
 }
 
 
@@ -287,6 +268,7 @@ i {
     margin-left: 2.5em;
 }
 
+
 .horizontal {
     position: relative;
     top: 3em;
@@ -296,8 +278,8 @@ i {
 .subInfo {
     display: flex;
     justify-content: space-around;
-
 }
+
 
 .leftColumn {
     display: flex;
@@ -305,26 +287,31 @@ i {
     justify-content: space-between;
 }
 
+
 .rightColumn {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
+
 .network {
     display: flex;
     flex-direction: column;
 }
+
 
 .type {
     display: flex;
     flex-direction: column;
 }
 
+
 .numberOfEps {
     display: flex;
     flex-direction: column;
 }
+
 
 .runTime {
     display: flex;
@@ -333,7 +320,6 @@ i {
 
 
 div {
-    
     display: flex;
     flex-direction: column;
     align-items: center;

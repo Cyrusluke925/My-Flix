@@ -1,6 +1,5 @@
 $( document ).ready(function() {
 
-
     $('#submitBtn').on('click', (e) => {
   
         e.preventDefault();
@@ -15,8 +14,6 @@ $( document ).ready(function() {
               }
             });
 
-
-
             function loginSuccess(json) {
               localStorage.clear();
               localStorage.setItem("token", json.signedJwt);
@@ -25,37 +22,37 @@ $( document ).ready(function() {
                 
             }
 
-        });
-      });
-
-
+    });
     checkForLogin()
-    
-    function checkForLogin(){
-      if(localStorage.length > 0){
-    
-        let jwt = localStorage.token
-        $.ajax({
-          type: "POST",
-          url: '/verify',  
-          beforeSend: function (xhr) {   
-              xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
-          }
+});
 
-        }).done(function (response) {
-          console.log(response)
-          user = { username: response.username, _id: response._id }
-          console.log("you can access variable user: " , user)
-            $('#message').text(`Welcome, ${ response.username || response.result.username } `);
-            sleep(500).then(() => {
-              window.location = "http://localhost:3000/search";
-              
-            })
-        }).fail(function (err) {
-            console.log(err);
-        });
+
+    
+function checkForLogin(){
+  if(localStorage.length > 0){
+
+    let jwt = localStorage.token
+    $.ajax({
+      type: "POST",
+      url: '/verify',  
+      beforeSend: function (xhr) {   
+          xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.token);
       }
-    }
+
+    }).done(function (response) {
+      console.log(response)
+      user = { username: response.username, _id: response._id }
+      console.log("you can access variable user: " , user)
+        $('#message').text(`Welcome, ${ response.username || response.result.username } `);
+        sleep(500).then(() => {
+          window.location = "http://localhost:3000/search";
+          
+        })
+    }).fail(function (err) {
+        console.log(err);
+    });
+  }
+}
   
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));

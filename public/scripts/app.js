@@ -1,8 +1,4 @@
-
-
 $( document ).ready(function() {
-
-
 
   //when mouse hovers over log in option on Landing Page (Index.html)
 

@@ -1,8 +1,3 @@
-
-
-
-
-
 $.ajax({
     method: "GET",
     url: '/api/users',
@@ -17,7 +12,6 @@ function appendUsers(e) {
         $('.userList').append(`<a class="user" href="#" data-id="${user.userName}">${user.userName}</a>`)
     })
 }
-
 
 
 $('.userList').on('click', '.user', function(user) {

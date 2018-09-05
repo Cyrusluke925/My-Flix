@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('./models');
 
-//var salt = bcrypt.genSaltSync();
 var salt = bcrypt.genSaltSync();
 
 const bodyParser = require('body-parser');
@@ -16,11 +15,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
-
-
-
-
+});
 
 
 app.use(express.static('public'));
@@ -31,31 +26,26 @@ app.get('/login', function logInPage(req, res) {
     res.sendFile('views/loginPage.html', {root: __dirname});
 })
 
+
 app.get('/signup', function signUpPage(req, res) {
     res.sendFile('views/signUpPage.html', {root: __dirname});
     
 })
 
 
-
 app.get('/', function homepage(req, res) {
     res.sendFile('views/index.html' , { root : __dirname});
 });
+
 
 app.get('/search', function homepage(req, res) {
     res.sendFile('views/searchPage.html' , { root : __dirname});
 });
 
+
 app.get('/mylist', function mylist(req, res) {
     res.sendFile('views/myList.html', {root: __dirname} );
 })
-
-
-app.post('/search', (req,res) =>{
-    // db.Flix.create(flixEntry ,  (err, ))
-
-})
-
 
 
 app.get('/userList', function findUsers(req, res) {
@@ -71,17 +61,14 @@ app.get('/api/users', function getAllUsers(req, res) {
 })
 
 
-
 app.get('/api/likes', function findLikes(req, res) {
     db.Like.find({}, (err, allLikes) => {
         if(err) {
-            console.log(er)
+            console.log(err)
         }
         res.json(allLikes)
     })
 })
-
-
 
 
 app.get('/api/flix', (req, res) => {
@@ -95,16 +82,9 @@ app.get('/api/flix', (req, res) => {
 })
 
 
-
-
-
 app.get("/favlist/:username", (req, res) =>{
-    //console.log('HELLLOOOOO')
     let id = req.body._id;
     let username = req.params.username;
-    //console.log(username)
-    //let jsonToReturn = [];
-    
     
     db.User.find({userName: username}, (err, userFound) => {
         if(err){
@@ -120,8 +100,7 @@ app.get("/favlist/:username", (req, res) =>{
             .exec( (err, succ) => {
                 res.json(succ);
             })
-        }
-    
+        } 
     })
 });
 
@@ -138,14 +117,8 @@ app.delete('/api/likes', (req, res) => {
 })
 
 
-
-
-
-
 app.post('/api/likes', (req, res) => {
     let media = req.body;
-    // console.log(req)
-    // console.log(media)
     db.Flix.create({movieId: media.movieId, name: media.name, poster_path: media.poster_path, backdrop_path: media.backdrop_path, overview: media.overview}, (err, savedFlix) => {
         if(err){console.log(err);}
         
@@ -158,23 +131,17 @@ app.post('/api/likes', (req, res) => {
             })
         })
     })
-
 })
 
 
-
 app.post('/signup', (req,res)=>{
-    // console.log("Signup Called")
     var username = req.body.userName;
     var password = req.body.password;
-    // console.log("Username: "+username);
-    // console.log("Password: "+password);
 
-
-    db.User.find({userName: username}, (err, users) => {
+    db.User.find({userName: username}, (err, users) =>{
         if(err){console.log(err);}
 
-        if (users.length >= 1) {
+        if (users.length >= 1){
             return res.status(401).json({message: 'Username already used please try again'})
         }else{
             console.log('creating user')
@@ -183,18 +150,11 @@ app.post('/signup', (req,res)=>{
                 console.log("hashing error:", err);
                 
                 res.status(200).json({error: err})
-                // we now have a successful hashed password
                 } else {
-
                     let userToCreate = {
                         userName: username,
-                        //commenting out hashed pass saving as text
-                        //password: hash
                         password: hash
                     }
-                    // console.log("Signup User: "+username);
-                    // console.log("Signup Hash: "+hash);
-
                     db.User.create( userToCreate ,(err, users) => {
                         if(err){console.log(err);}
                         let uid = users._id
@@ -214,17 +174,15 @@ app.post('/signup', (req,res)=>{
                                     username,
                                     uid,
                                     signedJwt
-                            })
+                                })
 
-                        });
+                            });
                     });
                 }
             });
         }
     });
 });
-
-
 
 
 app.post('/login', (req, res) => {
@@ -241,10 +199,8 @@ app.post('/login', (req, res) => {
         }else if (users.length < 1) {
             return res.status(401).json({message: 'Username/Password incorrect'})
         }
-        // console.log("users found: "+users);
         let passCheck = bcrypt.compare(password, users[0].password, (err, hash) => {
             console.log("Got to Hasing");
-            // console.log(hash);
             if(err){ 
                 console.log("hashing error:", err); 
                 return res.status(401).json({message: 'Username/Password incorrect'})
@@ -277,39 +233,32 @@ app.post('/login', (req, res) => {
 });
 
 
-    app.post('/verify', verifyToken, (req, res) => {
-        let verified= jwt.verify(req.token, 'vampires')
-        // console.log("verified: ", verified)
-        res.json(verified)
-    })
+app.post('/verify', verifyToken, (req, res) => {
+    let verified= jwt.verify(req.token, 'vampires')
+    res.json(verified)
+})
 
 
-
-    function verifyToken(req, res, next) {
-        // console.log("in verify...");
-        // Get auth header value
-        // when we send our token, we want to send it in our header
-        const bearerHeader = req.headers['authorization'];
-        // console.log(bearerHeader)
-        // Check if bearer is undefined
-        if(typeof bearerHeader !== 'undefined'){
-          const bearer = bearerHeader.split(' ');
-          // Get token from array
-          const bearerToken = bearer[1];
-          // Set the token
-          req.token = bearerToken;
-          // Next middleware
-          next();
-      
-        } else {
-          // Forbidden
-          res.sendStatus(403);
-        }
-      }
-	  
-
-
-
+function verifyToken(req, res, next) {
+    // Get auth header value
+    // when we send our token, we want to send it in our header
+    const bearerHeader = req.headers['authorization'];
+    // console.log(bearerHeader)
+    // Check if bearer is undefined
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ');
+        // Get token from array
+        const bearerToken = bearer[1];
+        // Set the token
+        req.token = bearerToken;
+        // Next middleware
+        next();
+    
+    } else {
+        // Forbidden
+        res.sendStatus(403);
+    }
+}
 
 
 function signJwt(){
@@ -331,7 +280,10 @@ function signJwt(){
 }
 
 
+
+//SERVER LISTENING
+
 app.listen(process.env.PORT || 3000, () => {
     console.log('Express server is up and running on http://localhost:3000/');
-  });
+});
   
