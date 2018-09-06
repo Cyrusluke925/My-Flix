@@ -155,6 +155,7 @@ function loadPage() {
 
 
             $('.movieLike').on('click', function(e) {
+                $('.movieLike').css('display', 'none');
                 e.preventDefault()
                 var movieId = $(this).attr('data-id');
                 $.ajax({
@@ -185,6 +186,7 @@ function loadPage() {
 
 
             $('.TVLike').on('click', function(e) {
+                $('.TVLike').css('display', 'none');
                 e.preventDefault()
                 var tvId = $(this).attr('data-id');
                 $.ajax({
