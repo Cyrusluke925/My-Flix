@@ -1,26 +1,10 @@
 $(document).ready(()=> {
     
+
+
+
     checkForLogin()
 
-    $(document).on('click', "#delete",e =>{
-        e.preventDefault();
-        var id = $(e.target).data('id');
-        console.log("ID being deletes:",id);
-        $.ajax({
-            type: "DELETE",
-            url: '/api/likes',
-            data: {likedID: id},
-            success: function onSuccess(){
-                console.log("ITEM DELETED")
-                $(e.target).parent().parent().remove()
-            },
-            error: function onError(){
-                console.log("ERRORED")
-            }
-    
-          })
-
-    })
 
     function checkForLogin(){
         if(localStorage.length > 0){
@@ -44,8 +28,9 @@ $(document).ready(()=> {
                 
                     
                     e.forEach(function(films){
+                        console.log(films)
                         let media = films._flix;
-                        console.log(media)
+                    
                         $('body').css('background-color',  '#e0e3e7')
                         $('.myList').append(`
                             <section data-id:"${films._id}" class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
@@ -61,18 +46,40 @@ $(document).ready(()=> {
 
                             <article class="symbols">
                             <a href="#" data-id=${media.id} class=like><i class="far fa-heart"></i></a>
+                            <a href="#" class="delete" data-id="${films._id}"><i class="far fa-trash-alt"></i>
                             <a href="#" class="info" data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                             </article>
                             
 
-                    
-                            <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
-                            <h3 class="genre">Genre:</h3>\n<p class="paragraph"></p>
                             
-                            <button id="delete" data-id="${films._id}">Remove from list</button>
+                            <h3 class="description">Description:</h3><p class="paragraph">\n ${media.overview}</p>
+                            
+                            
+                            
                             </article>
                             </section>`)
 
+                            $('.delete').on('click', function(e){
+                                e.preventDefault();
+                                
+                                var id = $(this).attr('data-id')
+                                
+                                // console.log("ID being deletes:",id);
+                                $.ajax({
+                                    type: "DELETE",
+                                    url: '/api/likes',
+                                    data: {likedID: id},
+                                    success: function onSuccess(){
+                                        console.log("ITEM DELETED")
+                                        $(e.target).parent().parent().parent().parent().remove()
+                                    },
+                                    error: function onError(){
+                                        console.log("ERRORED")
+                                    }
+                            
+                                  })
+                        
+                            })
                     });
                 }
             
@@ -90,5 +97,9 @@ $(document).ready(()=> {
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
+
+
+
+
 
 });
