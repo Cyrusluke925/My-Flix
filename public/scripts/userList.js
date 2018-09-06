@@ -5,7 +5,7 @@ $.ajax({
 
 })
 
-
+//this function appends a list of clickable links that have the name of all the usernames in the database
 function appendUsers(e) {
     console.log(e)
     e.forEach (function(user) {
@@ -14,6 +14,7 @@ function appendUsers(e) {
 }
 
 
+//when a certain username is clicked this function runs which loads all that users favorites to the page
 $('.userList').on('click', '.user', function(user) {
     $('.userList').empty();
     let userId = $(this).attr('data-id')

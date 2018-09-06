@@ -2,7 +2,7 @@ $(document).ready(()=> {
     
 
 
-
+    //returns user information to the console.
     checkForLogin()
 
 
@@ -21,6 +21,7 @@ $(document).ready(()=> {
             
             user = { username: response.username, _id: response._id }
 
+            //makes an api call to the user favlist of the user
             $.ajax({
                 method: 'GET',
                 url: `favlist/${user.username}`,
@@ -28,9 +29,9 @@ $(document).ready(()=> {
                 
                     
                     e.forEach(function(films){
-                        console.log(films)
                         let media = films._flix;
                     
+                        //appends the list of movies from your favorites on to the page.
                         $('body').css('background-color',  '#e0e3e7')
                         $('.myList').append(`
                             <section data-id:"${films._id}" class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
@@ -45,7 +46,7 @@ $(document).ready(()=> {
                             
 
                             <article class="symbols">
-                           
+                        
                             <a href="#" class="delete" data-id="${films._id}"><i class="far fa-trash-alt"></i>
                             <a href="#" class="info" data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                             </article>
@@ -64,7 +65,6 @@ $(document).ready(()=> {
                                 
                                 var id = $(this).attr('data-id')
                                 
-                                // console.log("ID being deletes:",id);
                                 $.ajax({
                                     type: "DELETE",
                                     url: '/api/likes',
@@ -73,11 +73,11 @@ $(document).ready(()=> {
                                         console.log("ITEM DELETED")
                                         $(e.target).parent().parent().parent().parent().remove()
                                     },
-                                    error: function onError(){
-                                        console.log("ERRORED")
+                                    error: function onError(err){
+                                        console.log(err)
                                     }
                             
-                                  })
+                                })
                         
                             })
                     });
@@ -85,17 +85,12 @@ $(document).ready(()=> {
             
             })
 
-            console.log("you can access variable user: " , user)
         
             }).fail(function (e1,e2,e3) {
                 console.log(e2);
                 alert("PLEASE LOG IN AGAIN");
             });
         }
-    }
-
-    function sleep (time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
     }
 
 

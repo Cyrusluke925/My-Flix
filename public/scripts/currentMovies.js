@@ -1,6 +1,8 @@
 $(document).ready(()=> {
     checkForLogin();
     loadPage();
+
+    //api key to access the movie database
     const apiKey = "e6104cb8ac4b63d1e99b6c905b41870c";
     let genres =[{"id": 28,"name": "Action"},{"id": 12,"name": "Adventure"},{"id": 16,"name": "Animation"},{"id": 35,"name": "Comedy"},{"id": 80,"name": "Crime"},{"id": 99,"name": "Documentary"},{"id": 18,"name": "Drama"},{"id": 10751,"name": "Family"},{"id": 14,"name": "Fantasy"},{"id": 36,"name": "History"},{"id": 27,"name": "Horror"},{"id": 10402,"name": "Music"},{"id": 9648,"name": "Mystery"},{"id": 10749,"name": "Romance"},{"id": 878,"name": "Science Fiction"},{"id": 10770,"name": "TV Movie"},{"id": 53,"name": "Thriller"},{"id": 10752,"name": "War"},{"id": 37,"name": "Western"}]
 
@@ -65,6 +67,9 @@ $(document).ready(()=> {
         });
 
 
+
+
+        //When heart button is clicked on a movie.
         $('.movieLike').on('click', function(e) {
             $(this).css('display', 'none');
             e.preventDefault()
@@ -96,6 +101,7 @@ $(document).ready(()=> {
         })
 
 
+        //when the info button is clicked on a movie
         $('.movieMoreInfo').on('click', function(e) {
             movieId = $(this).attr('data-id');
 
@@ -241,6 +247,8 @@ $(document).ready(()=> {
         
         
         
+
+        //finds the genres of the movies or shows
 
         function findGenres(input){
             // console.log(input)

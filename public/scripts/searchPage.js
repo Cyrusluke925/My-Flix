@@ -72,7 +72,6 @@ function loadPage() {
 
                             
                             function appendTV(){
-                                // console.log(media)
                             $('body').css('background-color',  '#e0e3e7')
                             $('.mediaList').append(`
                                 <section class="listing" style='background-image:url("https://image.tmdb.org/t/p/original${media.backdrop_path}")'>
@@ -111,7 +110,8 @@ function loadPage() {
 
                         };
 
-
+                    
+                //appends a list of the movies from the api of moviedb.
                 if (media.media_type === 'movie') {
                     let movieId = media.id;
                     appendMovie(media)
@@ -149,7 +149,7 @@ function loadPage() {
                 }
             });
 
-
+            //when the heart button is clicked on a movie
             $('.movieLike').on('click', function(e) {
                 $(this).css('display', 'none');
                 e.preventDefault()
@@ -181,6 +181,7 @@ function loadPage() {
             })
 
 
+            //when a heart button is clicked on a tv show
             $('.TVLike').on('click', function(e) {
                 $(this).css('display', 'none');
                 e.preventDefault()
@@ -212,6 +213,7 @@ function loadPage() {
              
             })
 
+            //when the more info button is clicked on a movie listing
             $('.movieMoreInfo').on('click', function(e) {
                 movieId = $(this).attr('data-id');
 
@@ -234,6 +236,7 @@ function loadPage() {
                                 $('body').css('background-color', 'rgba(49, 50, 55, 0.8)');
                                 $('form').css('margin-bottom', '20px');
 
+                                //clears the page and appends a more detailed view of the movie that was clicked on.
                                 $('.mediaList').css('margin-top', '0').append(`<section class="show" style='background-image:url("https://image.tmdb.org/t/p/original${movie.backdrop_path}")' style='background-size:cover'>
                                 
                                 <article class="header" style='background-color:rgba(49, 50, 55, 0.8)'>
@@ -281,6 +284,7 @@ function loadPage() {
                                 </section>
                                 `)
 
+                                //loops through the first five cast members of the ajax call and appends them to the page
                                 for (var i = 0; i < 5; i+= 1) {
                                     var person = credits.cast[i];
                                     
@@ -298,6 +302,7 @@ function loadPage() {
                                     
                                 }
 
+                                //loops through the first five crew members of the ajax call and appends them to the page.
                                 for (var i = 0; i < 5; i += 1) {
                                     var person = credits.crew[i];
                                     if(person !== undefined) {
@@ -320,7 +325,8 @@ function loadPage() {
 
                                 }
 
-                                
+
+                                //ajax call to get the current movie id from the api and then create a youtube trailer embedded on the page
                                 $.ajax({
                                     method: "GET",
                                     url: `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}&language=en-US`,
@@ -330,7 +336,6 @@ function loadPage() {
                                             $('#video').after(`<a id="trailer" data-id=${vid.results[0].key} style='margin-left: 100px'><i class="fab fa-youtube"></i></a>`)
 
                                             $('#trailer').on('click', function(trailer) {
-                                                // $('.castAndCrew').empty();
                                                 if($('div').length === 0) {
                                                     $('.castAndCrew').prepend(`<div><iframe allowFullScreen='allowFullScreen' width="640" height="390"
                                                     src="http://www.youtube.com/embed/${vidKey}"
@@ -355,6 +360,7 @@ function loadPage() {
             })
 
 
+            //when the info button is clicked on a tv show
             $('.info').on('click',  function(e) {
                 tvId = $(this).attr('data-id')
                 $.ajax({
@@ -370,13 +376,13 @@ function loadPage() {
                                 method: "GET",
                                 url: `https://api.themoviedb.org/3/tv/${tvShow.id}/credits?api_key=${apiKey}`,
                                 complete: function findCredits(response) {
-                                   
                                     var credits = response.responseJSON;
 
                                     $('body').css('background-color',  'rgba(49,50,55, 0.8)');
                                     $('form').css('margin-bottom', '20px');
                         
-
+                                    //opens up a detailed page view of the movie that is clicked on.
+                                    //appends more detailed information
                                     $('.mediaList').css('margin-top', '0').append(`<section class="show" style='background-image:url("https://image.tmdb.org/t/p/original${tvShow.backdrop_path}")' style='background-size:cover'>
                                         
                                     <article class="header" style='background-color:rgba(49, 50, 55, 0.8)'>
@@ -423,6 +429,7 @@ function loadPage() {
 
                                     </section>`)
 
+                                    //loops through the cast call to the api and returns the first five listed cast members and appends them to the page
                                     for (var i = 0; i < 5; i+= 1) {
                                         var person = credits.cast[i];
                                         
@@ -440,6 +447,7 @@ function loadPage() {
                                         
                                     }
 
+                                     //loops through the crew call to the api and returns the first five listed crew members and appends them to the page
                                     for (var i = 0; i < 5; i += 1) {
                                         var person = credits.crew[i];
                                         if(person !== undefined) {
@@ -462,7 +470,7 @@ function loadPage() {
 
                                     }
                                   
-                                
+                                //this call makes the youtube videos for a tv show.
                                 $.ajax({
                                     method: "GET",
                                     url: `https://api.themoviedb.org/3/tv/${tvShow.id}/videos?api_key=${apiKey}&language=en-US`,
@@ -502,11 +510,9 @@ function loadPage() {
             
                
             
-
+//finds the genres for the page that shows the full list of movies and trailers
             function findGenres(input){
-                // console.log(input)
                         if(input === undefined) {
-                            // return console.log('no value')
                         }
                         let genresArr = [];
                         for(let v = 0; v < input.length; v++){
@@ -525,11 +531,9 @@ function loadPage() {
 
 
 
-
+//finds the genres for the page that shows the detailed view of a single movie or show
                     function findSingleShowGenres(input){
-                        // console.log(input)
                                 if(input === undefined) {
-                                    // return console.log('no value')
                                 }
                                 let genresArr = [];
                                 for(let v = 0; v < input.length; v++){
@@ -556,23 +560,10 @@ function loadPage() {
                 }
 
 
-          
- 
-
-            function sendMovieSuccess(){
-
-            }
-
-            function sendMovieError(){
-                
-            }
 
 
-
-
-
+//when logout button is clicked it clears the local storage of the token and brings you back to the login page.
         $('.logout').on('click', e=>{
-            // console.log("Clicked");
             e.preventDefault();
             localStorage.clear();
             window.location = "http://localhost:3000/login";
@@ -580,19 +571,14 @@ function loadPage() {
         });
 
 
-
-
-
-    
-
 });
 
 function checkForLogin(){
     if(localStorage.length > 0){
-  
-      let jwt = localStorage.token
-    //   console.log(jwt);
-      $.ajax({
+
+    let jwt = localStorage.token
+    
+    $.ajax({
         type: "POST",
         url: '/verify',  
         beforeSend: function (xhr) {   

@@ -4,6 +4,8 @@ $( document ).ready(function() {
   
         e.preventDefault();
 
+
+        //ajax call to posting to the database with the information from the login form
             $.ajax({
               method: 'POST',
               data: $('form').serialize(),
@@ -27,6 +29,7 @@ $( document ).ready(function() {
 });
 
 
+//validates the user and returns it to the console.
     
 function checkForLogin(){
   if(localStorage.length > 0){
