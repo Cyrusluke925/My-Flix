@@ -45,7 +45,7 @@ $(document).ready(()=> {
                             
 
                             <article class="symbols">
-                            <a href="#" data-id=${media.id} class=like><i class="far fa-heart"></i></a>
+                           
                             <a href="#" class="delete" data-id="${films._id}"><i class="far fa-trash-alt"></i>
                             <a href="#" class="info" data-id=${media.id}><i class="fas fa-info-circle"></i></a>
                             </article>

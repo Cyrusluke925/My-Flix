@@ -52,6 +52,10 @@ app.get('/userList', function findUsers(req, res) {
     res.sendFile('/views/userList.html', {root: __dirname});
 })
 
+app.get('/moviesintheaters', function gettheatermovies(req, res) {
+    res.sendFile('/views/currentMovies.html',  {root: __dirname});
+})
+
 
 app.get('/api/users', function getAllUsers(req, res) {
     db.User.find({}, (err, allUsers) => {
