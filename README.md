@@ -2,7 +2,11 @@
 
 * Apllication for users to catalogue their favorite shows and add them to a personal list and can share with other users their list
 
-* Link to Heroku
+* Link to Heroku:
+
+
+* Link to Trello:
+* https://trello.com/b/vfGIV9O4/moviesgalore
 
 ## Technologies Used
 
